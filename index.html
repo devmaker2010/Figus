@@ -1575,7 +1575,7 @@ function exportLog() {
       lines.push(`── ${e.date} ──`);
     }
     const numLbl = e.num === 0 ? '00' : String(e.num).padStart(2, '0');
-    lines.push(`${e.time}  ${badgeText(e.type).padEnd(14)}  ${e.emoji} ${e.code} ${numLbl}  (${statLabel(e.from)} → ${statLabel(e.to)})`);
+    lines.push(`${e.time}  ${badgeText(e.type)}  ${e.emoji} ${e.code} ${numLbl}`);
   });
   lines.push('', `Exportado desde Álbum Mundial 2026 📱`);
   const text = lines.join('\n');
@@ -1625,7 +1625,7 @@ function shareLogWhatsApp() {
       lines.push(`*── ${e.date} ──*`);
     }
     const numLbl = e.num === 0 ? '00' : String(e.num).padStart(2, '0');
-    lines.push(`${e.time}  ${badgeText(e.type)}  ${e.emoji} ${e.code} ${numLbl}  (${statLabel(e.from)} → ${statLabel(e.to)})`);
+    lines.push(`${e.time}  ${badgeText(e.type)}  ${e.emoji} ${e.code} ${numLbl}`);
   });
   lines.push('', `▬▬ Enviado desde Álbum Mundial 2026 📱`);
 
