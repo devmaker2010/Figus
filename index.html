@@ -1140,6 +1140,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
           <div style="font-size:16px;font-weight:800;">🗒️ Historial de cambios</div>
           <div style="display:flex;gap:6px;">
             <button onclick="exportLog()" style="font-size:11px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:20px;padding:5px 12px;cursor:pointer;font-weight:700;">📋 Copiar</button>
+            <button onclick="shareLogWhatsApp()" style="font-size:11px;background:rgba(37,211,102,.15);border:1px solid rgba(37,211,102,.4);color:#25D366;border-radius:20px;padding:5px 12px;cursor:pointer;font-weight:700;">📱 WhatsApp</button>
             <button onclick="confirmClearLog()" style="font-size:11px;background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.3);color:#f87171;border-radius:20px;padding:5px 12px;cursor:pointer;font-weight:700;">🗑️ Borrar</button>
           </div>
         </div>
@@ -1596,6 +1597,41 @@ function confirmClearLog() {
     saveLog([]);
     buildLogPanel();
   }
+}
+
+function shareLogWhatsApp() {
+  let entries = loadLog();
+
+  // Respeta el filtro activo (Todos / Entregué / Recibí / Otros)
+  if (activeLogFilter === 'give') {
+    entries = entries.filter(e => e.type === 'give');
+  } else if (activeLogFilter === 'receive') {
+    entries = entries.filter(e => e.type === 'receive');
+  } else if (activeLogFilter === 'other') {
+    entries = entries.filter(e => e.type !== 'give' && e.type !== 'receive');
+  }
+
+  if (entries.length === 0) {
+    alert('No hay entradas en el log para compartir.');
+    return;
+  }
+
+  const filterLbl = { all: 'Todos', give: 'Entregué', receive: 'Recibí', other: 'Otros' }[activeLogFilter] || 'Todos';
+  const lines = [`🗒️ *HISTORIAL DE CAMBIOS – MUNDIAL 2026*`, `_Filtro: ${filterLbl}_`, ''];
+  let currentDate = '';
+  entries.forEach(e => {
+    if (e.date !== currentDate) {
+      currentDate = e.date;
+      lines.push(`*── ${e.date} ──*`);
+    }
+    const numLbl = e.num === 0 ? '00' : String(e.num).padStart(2, '0');
+    lines.push(`${e.time}  ${badgeText(e.type)}  ${e.emoji} ${e.code} ${numLbl}  (${statLabel(e.from)} → ${statLabel(e.to)})`);
+  });
+  lines.push('', `▬▬ Enviado desde Álbum Mundial 2026 📱`);
+
+  const text = lines.join('\n');
+  const encoded = encodeURIComponent(text);
+  window.open(`https://wa.me/?text=${encoded}`, '_blank');
 }
 
 function loadState() {
