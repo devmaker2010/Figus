@@ -1,0 +1,3912 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>⚽ Mundial 2026 – Mi Álbum</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='bg' cx='40%' cy='35%'><stop offset='0%' stop-color='%23ffffff'/><stop offset='100%' stop-color='%23d0d0d0'/></radialGradient></defs><circle cx='50' cy='50' r='48' fill='url(%23bg)' stroke='%23333' stroke-width='2'/><polygon points='50,18 62,28 58,43 42,43 38,28' fill='%23111'/><polygon points='82,35 85,50 73,57 63,47 68,32' fill='%23111'/><polygon points='72,72 60,78 50,68 54,54 68,54' fill='%23111'/><polygon points='28,72 32,58 46,54 50,68 40,78' fill='%23111'/><polygon points='18,35 32,32 37,47 27,57 15,50' fill='%23111'/></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='bg' cx='40%' cy='35%'><stop offset='0%' stop-color='%23ffffff'/><stop offset='100%' stop-color='%23d0d0d0'/></radialGradient></defs><circle cx='50' cy='50' r='48' fill='url(%23bg)' stroke='%23333' stroke-width='2'/><polygon points='50,18 62,28 58,43 42,43 38,28' fill='%23111'/><polygon points='82,35 85,50 73,57 63,47 68,32' fill='%23111'/><polygon points='72,72 60,78 50,68 54,54 68,54' fill='%23111'/><polygon points='28,72 32,58 46,54 50,68 40,78' fill='%23111'/><polygon points='18,35 32,32 37,47 27,57 15,50' fill='%23111'/></svg>">
+<link rel="manifest" href="data:application/json,%7B%22name%22%3A%22Album%20Mundial%202026%22%2C%22short_name%22%3A%22Mundial%2026%22%2C%22description%22%3A%22Mi%20album%20de%20figuritas%20del%20Mundial%202026%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230f172a%22%2C%22theme_color%22%3A%22%23064e3b%22%2C%22orientation%22%3A%22portrait%22%7D">
+<meta name="theme-color" content="#064e3b">
+<meta name="mobile-web-app-capable" content="yes">
+<style>
+:root {
+  --green: #16a34a;
+  --green-dark: #166534;
+  --green-light: #dcfce7;
+  --gold: #f59e0b;
+  --gold-dark: #92400e;
+  --red: #dc2626;
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface2: #334155;
+  --border: #475569;
+  --text: #f1f5f9;
+  --text2: #94a3b8;
+  --accent: #22d3ee;
+  --radius: 16px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bot: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; overflow: hidden; }
+
+/* ── LAYOUT ── */
+.app { display: flex; flex-direction: column; height: 100dvh; height: 100vh; }
+
+/* ── HEADER ── */
+.header {
+  padding: calc(var(--safe-top) + 12px) 16px 12px;
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 60%, #0f766e 100%);
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '⚽';
+  position: absolute;
+  right: -10px; top: -10px;
+  font-size: 80px;
+  opacity: .07;
+  transform: rotate(20deg);
+}
+.header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.header-title { font-size: 20px; font-weight: 800; letter-spacing: -.5px; }
+.header-title span { color: var(--gold); }
+.save-badge {
+  font-size: 11px;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  padding: 4px 10px;
+  border-radius: 20px;
+  color: rgba(255,255,255,.7);
+  transition: all .3s;
+}
+.save-badge.saving { color: var(--gold); border-color: var(--gold); }
+
+/* Barra global */
+.global-bar { height: 8px; background: rgba(255,255,255,.15); border-radius: 99px; overflow: hidden; }
+.global-fill { height: 100%; background: linear-gradient(90deg, #10b981, #f59e0b); border-radius: 99px; transition: width .5s; }
+.global-stats { display: flex; gap: 12px; margin-top: 8px; }
+.stat-pill {
+  flex: 1;
+  background: rgba(255,255,255,.08);
+  border-radius: 10px;
+  padding: 6px 10px;
+  text-align: center;
+}
+.stat-num { font-size: 20px; font-weight: 800; color: #fff; line-height: 1; }
+.stat-lbl { font-size: 10px; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: .5px; }
+
+/* ── LED BANNER ── */
+.led-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #0a0a0a;
+  border-radius: 10px;
+  margin-top: 10px;
+  padding: 7px 10px;
+  border: 1px solid #222;
+  overflow: hidden;
+  position: relative;
+}
+.led-label {
+  font-size: 9px;
+  font-weight: 900;
+  color: #facc15;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-shadow: 0 0 6px #facc15;
+}
+.led-track-wrap {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+.led-track {
+  display: flex;
+  gap: 0;
+  white-space: nowrap;
+  animation: ledScroll 18s linear infinite;
+  will-change: transform;
+}
+.led-track:hover { animation-play-state: paused; }
+@keyframes ledScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.led-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 16px;
+  cursor: default;
+}
+.led-flag { font-size: 16px; }
+.led-team {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  filter: drop-shadow(0 0 4px currentColor);
+}
+.led-count {
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(255,255,255,.1);
+  border-radius: 10px;
+  padding: 1px 6px;
+  letter-spacing: .3px;
+}
+.led-sep {
+  color: rgba(255,255,255,.2);
+  font-size: 16px;
+  padding: 0 4px;
+}
+.led-loading { font-size: 11px; color: #555; padding: 0 12px; }
+
+/* ── SOBRES KPIs ── */
+.sobres-row {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,.06);
+  border-radius: 12px;
+  margin-top: 10px;
+  padding: 8px 4px;
+  border: 1px solid rgba(255,255,255,.08);
+}
+.sobre-kpi {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 2px 4px;
+}
+.sobre-icon { font-size: 20px; flex-shrink: 0; }
+.sobre-info { min-width: 0; }
+.sobre-num {
+  font-size: 17px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+  white-space: nowrap;
+}
+.sobre-num.sobre-need { color: #f87171; }
+.sobre-num.sobre-price { color: #34d399; }
+.sobre-lbl {
+  font-size: 9px;
+  color: rgba(255,255,255,.5);
+  text-transform: uppercase;
+  letter-spacing: .3px;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+.sobre-divider {
+  width: 1px;
+  height: 32px;
+  background: rgba(255,255,255,.12);
+  flex-shrink: 0;
+}
+
+/* ── NAV TABS ── */
+.tabs {
+  display: flex;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.tab {
+  flex: 1;
+  padding: 10px 4px 8px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text2);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all .2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  user-select: none;
+}
+.tab .tab-icon { font-size: 18px; }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── CONTENT AREA ── */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── TEAM CARDS ── */
+.team-list { padding: 8px; padding-bottom: 80px; display: flex; flex-direction: column; gap: 8px; }
+.team-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: border-color .2s;
+}
+.team-card.complete { border-color: var(--green); }
+.team-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px 8px;
+  cursor: pointer;
+  user-select: none;
+}
+.team-flag { font-size: 28px; flex-shrink: 0; width: 36px; text-align: center; }
+.team-info { flex: 1; min-width: 0; }
+.team-name-text { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.team-subinfo { font-size: 11px; color: var(--text2); margin-top: 1px; }
+.team-progress { text-align: right; flex-shrink: 0; }
+.team-count-big { font-size: 22px; font-weight: 800; line-height: 1; }
+.team-count-big.done { color: var(--green); }
+.team-pct-small { font-size: 10px; color: var(--text2); }
+.team-bar { height: 4px; background: var(--surface2); margin: 0 12px 8px; border-radius: 99px; overflow: hidden; }
+.team-bar-fill { height: 100%; background: linear-gradient(90deg, #10b981, #22d3ee); border-radius: 99px; transition: width .4s; }
+.team-bar-fill.done { background: var(--green); }
+.team-stickers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 8px 12px 12px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── STICKER CHIPS ── */
+.sticker-chip {
+  width: 54px;
+  height: 54px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  background: var(--surface2);
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: all .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.sticker-chip:active { transform: scale(.88); }
+.sticker-chip.owned {
+  background: var(--green);
+  border-color: var(--green-dark);
+  color: #fff;
+}
+.sticker-chip.repeated {
+  background: var(--gold);
+  border-color: var(--gold-dark);
+  color: #1a1a1a;
+  font-size: 11px;
+  position: relative;
+}
+.sticker-chip.repeated::after {
+  content: attr(data-rep-label);
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--gold);
+  border: 1.5px solid var(--gold-dark);
+  color: #1a1a1a;
+  font-size: 8px;
+  font-weight: 900;
+  border-radius: 6px;
+  padding: 0 3px;
+  line-height: 1.4;
+  pointer-events: none;
+}
+.sticker-chip.repeated3 {
+  background: #f97316;
+  border-color: #c2410c;
+  color: #fff;
+  font-size: 11px;
+  position: relative;
+}
+.sticker-chip.repeated3::after {
+  content: attr(data-rep-label);
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #f97316;
+  border: 1.5px solid #c2410c;
+  color: #fff;
+  font-size: 8px;
+  font-weight: 900;
+  border-radius: 6px;
+  padding: 0 3px;
+  line-height: 1.4;
+  pointer-events: none;
+}
+.sticker-chip.sticker-highlight {
+  outline: 2.5px solid var(--gold);
+  outline-offset: 1px;
+  box-shadow: 0 0 8px rgba(245,158,11,.7);
+  animation: pulse-highlight .8s ease-in-out infinite alternate;
+}
+@keyframes pulse-highlight {
+  from { box-shadow: 0 0 4px rgba(245,158,11,.5); }
+  to   { box-shadow: 0 0 12px rgba(245,158,11,.9); }
+}
+
+/* ── PANEL FALTANTES ── */
+.missing-panel { padding: 12px 8px; }
+.missing-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 4px; }
+.missing-title { font-size: 16px; font-weight: 800; }
+.wa-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #25D366;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.wa-btn:active { opacity: .8; }
+.wa-btn svg { width: 16px; height: 16px; }
+.missing-team-block { margin-bottom: 10px; background: var(--surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+.missing-team-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--surface2);
+}
+.missing-flag-sm { font-size: 20px; }
+.missing-team-nm { font-size: 13px; font-weight: 700; flex: 1; }
+.missing-badge {
+  background: var(--red);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  border-radius: 20px;
+  padding: 2px 8px;
+}
+.missing-nums { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 12px; }
+.missing-num {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 3px 7px;
+}
+.all-done-msg {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text2);
+}
+.all-done-msg .emoji { font-size: 60px; margin-bottom: 12px; }
+.all-done-msg .txt { font-size: 18px; font-weight: 700; color: var(--green); }
+
+/* ── PANEL ESTADÍSTICAS ── */
+.stats-panel { padding: 12px 8px; }
+.stats-title { font-size: 16px; font-weight: 800; margin: 4px 4px 12px; }
+.progress-ring-wrap { display: flex; flex-direction: column; align-items: center; padding: 20px 0 10px; }
+.progress-ring-wrap svg { width: 140px; height: 140px; }
+.ring-bg { fill: none; stroke: var(--surface2); stroke-width: 14; }
+.ring-fill { fill: none; stroke-width: 14; stroke-linecap: round; transition: stroke-dashoffset .8s ease; }
+.ring-pct { font-size: 26px; font-weight: 900; fill: #fff; text-anchor: middle; dominant-baseline: central; }
+.ring-lbl { font-size: 10px; fill: var(--text2); text-anchor: middle; dominant-baseline: central; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.stats-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 12px;
+  text-align: center;
+}
+.stats-card-num { font-size: 28px; font-weight: 900; }
+.stats-card-lbl { font-size: 11px; color: var(--text2); margin-top: 2px; }
+.stats-card.green .stats-card-num { color: var(--green); }
+.stats-card.gold .stats-card-num { color: var(--gold); }
+.stats-card.red .stats-card-num { color: var(--red); }
+.stats-card.blue .stats-card-num { color: var(--accent); }
+
+.team-ranking { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.ranking-title { padding: 10px 14px; background: var(--surface2); font-size: 13px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; }
+.ranking-row { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-top: 1px solid var(--border); }
+.ranking-pos { font-size: 13px; font-weight: 800; color: var(--text2); width: 20px; }
+.ranking-flag { font-size: 20px; flex-shrink: 0; }
+.ranking-name { font-size: 13px; font-weight: 600; flex: 1; }
+.ranking-count { font-size: 13px; font-weight: 800; color: var(--accent); }
+.ranking-bar-wrap { width: 60px; background: var(--surface2); border-radius: 99px; height: 4px; overflow: hidden; }
+.ranking-bar-inner { height: 100%; background: var(--green); border-radius: 99px; }
+
+/* ── WHATSAPP MODAL ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  z-index: 999;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: var(--safe-bot);
+}
+.modal-overlay.open { display: flex; }
+.modal-sheet {
+  background: var(--surface);
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUp .25s ease;
+}
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.modal-top { display: flex; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.modal-top-title { flex: 1; font-size: 16px; font-weight: 800; }
+.modal-close { font-size: 22px; color: var(--text2); cursor: pointer; padding: 0 4px; }
+.modal-body { padding: 14px; overflow-y: auto; flex: 1; }
+.modal-textarea {
+  width: 100%;
+  min-height: 200px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 12px;
+  padding: 12px;
+  resize: vertical;
+  font-family: monospace;
+}
+.modal-actions { display: flex; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--border); padding-bottom: calc(12px + var(--safe-bot)); }
+.btn-copy {
+  flex: 1;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-wa {
+  flex: 2;
+  background: #25D366;
+  border: none;
+  color: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ── SEARCH BAR ── */
+.search-wrap { padding: 8px 8px 0; display: flex; gap: 6px; }
+.search-wrap .search-input { flex: 1; min-width: 0; }
+
+/* ── STICKY ALBUM BAR ── */
+.album-sticky-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2px;
+}
+.search-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 14px;
+  padding: 10px 14px;
+  outline: none;
+}
+.search-input:focus { border-color: var(--accent); }
+.search-input::placeholder { color: var(--text2); }
+
+/* ── FILTER BAR ── */
+.filter-bar { display: flex; gap: 6px; padding: 8px 8px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.filter-bar::-webkit-scrollbar { display: none; }
+.filter-pill {
+  flex-shrink: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+.filter-pill.active { background: var(--accent); border-color: var(--accent); color: #0f172a; }
+
+/* ── SORT PILLS ── */
+.sort-bar { display: flex; gap: 6px; padding: 4px 8px 0; align-items: center; }
+.sort-label { font-size: 11px; color: var(--text2); font-weight: 600; white-space: nowrap; }
+.sort-pill {
+  flex-shrink: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+.sort-pill.active { background: var(--surface2); border-color: var(--accent); color: var(--accent); }
+.danger-zone { padding: 20px 8px 8px; }
+.btn-reset {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--red);
+  color: var(--red);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ── BOTTOM NAV SAFE AREA ── */
+.bottom-safe { height: var(--safe-bot); flex-shrink: 0; background: var(--surface); }
+
+/* ── EXPORT BUTTONS ── */
+.export-bar {
+  display: flex;
+  gap: 8px;
+  padding: 8px 8px 0;
+  flex-shrink: 0;
+}
+.export-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .2s, transform .15s;
+  user-select: none;
+}
+.export-btn:active { opacity: .8; transform: scale(.96); }
+.btn-pdf  { background: #ef4444; color: #fff; }
+.btn-drive { background: #1a73e8; color: #fff; }
+
+/* ── DRIVE MODAL ── */
+.drive-modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.75);
+  z-index: 1000; display: none; align-items: flex-end;
+  justify-content: center; padding-bottom: var(--safe-bot);
+}
+.drive-modal-overlay.open { display: flex; }
+.drive-modal-sheet {
+  background: var(--surface); border-radius: 20px 20px 0 0;
+  width: 100%; max-height: 85vh; display: flex;
+  flex-direction: column; overflow: hidden;
+  animation: slideUp .25s ease;
+}
+.drive-modal-top {
+  display: flex; align-items: center;
+  padding: 14px 16px; border-bottom: 1px solid var(--border);
+}
+.drive-modal-title { flex: 1; font-size: 16px; font-weight: 800; }
+.drive-modal-close { font-size: 22px; color: var(--text2); cursor: pointer; padding: 0 4px; }
+.drive-modal-body { padding: 16px; overflow-y: auto; flex: 1; }
+.drive-info-box {
+  background: rgba(26,115,232,.12); border: 1px solid rgba(26,115,232,.3);
+  border-radius: 12px; padding: 14px; margin-bottom: 16px;
+  font-size: 13px; line-height: 1.6; color: var(--text);
+}
+.drive-info-box strong { color: #60a5fa; }
+.drive-steps { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.drive-step {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: var(--surface2); border-radius: 10px; padding: 12px;
+}
+.drive-step-num {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: #1a73e8; color: #fff; font-size: 12px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.drive-step-txt { font-size: 12px; line-height: 1.5; color: var(--text); }
+.drive-step-txt strong { color: var(--accent); }
+.drive-modal-actions { display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--border); padding-bottom: calc(12px + var(--safe-bot)); }
+.btn-drive-download {
+  flex: 2; background: #1a73e8; border: none; color: #fff;
+  border-radius: 12px; padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer;
+}
+.btn-drive-cancel {
+  flex: 1; background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+  border-radius: 12px; padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer;
+}
+
+/* ── CLOUD SYNC MODAL ── */
+.sync-modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.8);
+  z-index: 1100; display: none; align-items: flex-end;
+  justify-content: center; padding-bottom: var(--safe-bot);
+}
+.sync-modal-overlay.open { display: flex; }
+.sync-modal-sheet {
+  background: var(--surface); border-radius: 20px 20px 0 0;
+  width: 100%; max-height: 92vh; display: flex;
+  flex-direction: column; overflow: hidden;
+  animation: slideUp .25s ease;
+}
+.sync-modal-top {
+  display: flex; align-items: center;
+  padding: 14px 16px; border-bottom: 1px solid var(--border);
+}
+.sync-modal-title { flex: 1; font-size: 16px; font-weight: 800; }
+.sync-modal-close { font-size: 22px; color: var(--text2); cursor: pointer; padding: 0 4px; }
+.sync-modal-body { padding: 16px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+.sync-info-box {
+  background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.25);
+  border-radius: 12px; padding: 14px; font-size: 13px; line-height: 1.6; color: var(--text);
+}
+.sync-info-box strong { color: var(--accent); }
+.sync-pin-input {
+  width: 100%; background: var(--bg); border: 2px solid var(--border);
+  border-radius: 12px; color: var(--text); font-size: 22px; font-weight: 800;
+  padding: 14px; text-align: center; outline: none; letter-spacing: 6px;
+  font-family: monospace;
+}
+.sync-pin-input:focus { border-color: var(--accent); }
+.sync-pin-input::placeholder { font-size: 14px; letter-spacing: 1px; font-weight: 400; color: var(--text2); }
+.sync-status {
+  text-align: center; font-size: 13px; font-weight: 600;
+  min-height: 20px; transition: all .3s;
+}
+.sync-btn-row { display: flex; gap: 8px; }
+.sync-btn {
+  flex: 1; border: none; border-radius: 12px; padding: 14px;
+  font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity .2s;
+}
+.sync-btn:active { opacity: .8; }
+.sync-btn-upload { background: var(--green); color: #fff; }
+.sync-btn-download { background: var(--accent); color: #0f172a; }
+.sync-connected-bar {
+  background: rgba(16,185,129,.12); border: 1px solid rgba(16,185,129,.3);
+  border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 10px;
+  font-size: 13px; font-weight: 600; color: #10b981;
+}
+.sync-disconnect-btn {
+  margin-left: auto; background: transparent; border: 1px solid var(--border);
+  color: var(--text2); border-radius: 8px; padding: 4px 10px; font-size: 11px;
+  font-weight: 600; cursor: pointer;
+}
+.sync-auto-row {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface2); border-radius: 10px; padding: 12px 14px;
+}
+.sync-toggle {
+  width: 44px; height: 24px; background: var(--border); border-radius: 99px;
+  cursor: pointer; position: relative; transition: background .2s; flex-shrink: 0;
+}
+.sync-toggle.on { background: var(--green); }
+.sync-toggle::after {
+  content: ''; position: absolute; top: 3px; left: 3px;
+  width: 18px; height: 18px; background: #fff; border-radius: 50%;
+  transition: left .2s;
+}
+.sync-toggle.on::after { left: 23px; }
+
+/* ── LOG PANEL ── */
+.log-day-header {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  padding: 14px 4px 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.log-day-header::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.log-entry {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  transition: border-color .15s;
+}
+.log-entry.give  { border-left: 3px solid var(--gold); }
+.log-entry.receive { border-left: 3px solid var(--accent); }
+.log-entry.owned { border-left: 3px solid var(--green); }
+.log-entry.removed { border-left: 3px solid var(--red); opacity: .7; }
+.log-chip {
+  width: 46px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  flex-shrink: 0;
+  font-size: 9px;
+  font-weight: 900;
+}
+.log-chip.give    { background: var(--gold); color: #1a1a1a; }
+.log-chip.receive { background: var(--accent); color: #0f172a; }
+.log-chip.owned   { background: var(--green); color: #fff; }
+.log-chip.removed { background: var(--surface2); color: var(--text2); }
+.log-chip.repeated { background: rgba(245,158,11,.25); color: var(--gold); border: 1px solid var(--gold); }
+.log-num { font-size: 14px; font-weight: 800; line-height: 1; }
+.log-info { flex: 1; min-width: 0; }
+.log-desc { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.log-time { font-size: 10px; color: var(--text2); margin-top: 2px; }
+.log-badge {
+  font-size: 10px;
+  font-weight: 800;
+  border-radius: 20px;
+  padding: 2px 8px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.log-badge.give    { background: rgba(245,158,11,.2); color: var(--gold); }
+.log-badge.receive { background: rgba(34,211,238,.15); color: var(--accent); }
+.log-badge.owned   { background: rgba(22,163,74,.2); color: var(--green); }
+.log-badge.removed { background: rgba(220,38,38,.15); color: #f87171; }
+.log-badge.repeated { background: rgba(245,158,11,.15); color: var(--gold); }
+.log-empty {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--text2);
+}
+.log-empty .emoji { font-size: 48px; margin-bottom: 10px; }
+.log-empty .txt { font-size: 14px; font-weight: 700; }
+.log-empty .sub { font-size: 12px; margin-top: 4px; }
+
+/* ── EXCHANGE COUNTER BAR ── */
+.exchange-bar {
+  position: fixed !important;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: #0f172a;
+  border: 1.5px solid rgba(255,255,255,.25);
+  border-radius: 99px;
+  padding: 0;
+  box-shadow: 0 8px 32px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.08);
+  overflow: hidden;
+  transition: opacity .25s ease, visibility .25s ease;
+  max-width: calc(100vw - 32px);
+  min-width: 240px;
+}
+.exchange-bar.visible {
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto;
+}
+@keyframes barSlideUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(16px) scale(.93); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+.xbar-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  min-width: 90px;
+  gap: 1px;
+}
+.xbar-side.give { background: rgba(245,158,11,.18); border-right: 1px solid rgba(255,255,255,.08); }
+.xbar-side.receive { background: rgba(34,211,238,.12); border-left: 1px solid rgba(255,255,255,.08); }
+.xbar-num {
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1;
+}
+.xbar-side.give .xbar-num { color: #f59e0b; }
+.xbar-side.receive .xbar-num { color: #22d3ee; }
+.xbar-lbl {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  opacity: .7;
+}
+.xbar-middle {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.xbar-emoji { font-size: 18px; }
+.xbar-reset {
+  font-size: 9px;
+  background: rgba(255,255,255,.1);
+  border: none;
+  color: rgba(255,255,255,.5);
+  border-radius: 20px;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: all .2s;
+}
+.xbar-reset:active { background: rgba(255,255,255,.2); color: #fff; }
+
+/* ── PRINT / PDF STYLES ── */
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  body { background: #fff !important; color: #111 !important; overflow: visible !important; font-family: 'Segoe UI', system-ui, sans-serif; }
+  .app { height: auto !important; display: block !important; overflow: visible !important; }
+  .header, .tabs, .content, .panel, .bottom-safe, .modal-overlay, .drive-modal-overlay { display: none !important; }
+  .pdf-output { display: block !important; }
+}
+.pdf-output { display: none; }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="header-title">⚽ <span>Mundial</span> 2026</div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <!-- Sobres mini en header -->
+        <div style="display:flex;gap:4px;align-items:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:3px 8px;">
+          <span style="font-size:13px;">🎴</span>
+          <span id="sobreAbiertos" style="font-size:12px;font-weight:900;color:#fff;">0</span>
+          <span style="font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.3px;">sobres</span>
+          <span style="width:1px;height:14px;background:rgba(255,255,255,.15);margin:0 2px;"></span>
+          <span style="font-size:13px;">🛒</span>
+          <span id="sobreNecesarios" style="font-size:12px;font-weight:900;color:#f87171;">0</span>
+          <span style="font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.3px;">faltan</span>
+        </div>
+        <button onclick="openSyncModal()" style="font-size:11px;background:rgba(34,211,238,.2);border:1px solid rgba(34,211,238,.4);padding:4px 10px;border-radius:20px;color:#22d3ee;cursor:pointer;font-weight:700;" id="cloudBtn">☁️ Nube</button>
+        <button onclick="openSaveLoadModal()" style="font-size:11px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:4px 10px;border-radius:20px;color:rgba(255,255,255,.85);cursor:pointer;font-weight:600;">💾 Datos</button>
+        <div class="save-badge" id="saveBadge">Guardado ✓</div>
+      </div>
+    </div>
+    <div class="global-bar"><div class="global-fill" id="globalFill"></div></div>
+    <div class="global-stats">
+      <div class="stat-pill">
+        <div class="stat-num" id="statPct">0%</div>
+        <div class="stat-lbl">Completado</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-num" id="statHave">0</div>
+        <div class="stat-lbl">🎴 Tengo</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-num" id="statMiss">0</div>
+        <div class="stat-lbl">🔍 Faltan</div>
+      </div>
+      <div class="stat-pill">
+        <div class="stat-num" id="statRep" style="color:var(--gold)">0</div>
+        <div class="stat-lbl">🔁 Repetidas</div>
+      </div>
+    </div>
+    <!-- LED BANNER: equipos casi completos -->
+    <div class="led-banner" id="ledBanner">
+      <div class="led-label">🏆 CASI COMPLETOS</div>
+      <div class="led-track-wrap">
+        <div class="led-track" id="ledTrack">
+          <span class="led-loading">Cargando...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('album')">
+      <span class="tab-icon">📋</span>Álbum
+    </div>
+    <div class="tab" onclick="showTab('missing')">
+      <span class="tab-icon">🔍</span>Faltantes
+    </div>
+    <div class="tab" onclick="showTab('stats')">
+      <span class="tab-icon">📊</span>Stats
+    </div>
+    <div class="tab" onclick="showTab('matchmaker')" style="flex:0.85;">
+      <span class="tab-icon">🤝</span>Cambio
+    </div>
+    <div class="tab" onclick="showTab('log')" style="flex:0.75;">
+      <span class="tab-icon">🗒️</span>Log
+    </div>
+    <div class="tab" onclick="openWA()" style="color:#25D366;flex:0.65;">
+      <span class="tab-icon">
+        <svg viewBox="0 0 24 24" fill="#25D366" style="width:20px;height:20px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </span>WA
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content" id="content">
+
+    <!-- ÁLBUM PANEL -->
+    <div class="panel active" id="panel-album">
+      <div class="album-sticky-bar">
+        <div class="search-wrap">
+          <input class="search-input" id="searchInput" type="text" placeholder="🔎 Buscar equipo…" oninput="filterTeams()">
+          <input class="search-input" id="stickerInput" type="text" placeholder="🔢 Sigla Nro…" oninput="filterTeams()" autocomplete="off" autocorrect="off" spellcheck="false" onfocus="this.select()" onclick="this.select()">
+        </div>
+        <div class="filter-bar">
+          <div class="filter-pill active" onclick="setFilter('all', this)">Todos</div>
+          <div class="filter-pill" onclick="setFilter('missing', this)">🔍 Me faltan</div>
+          <div class="filter-pill" onclick="setFilter('repeated', this)">🔁 Repetidas</div>
+          <div style="width:1px;background:var(--border);margin:0 8px;flex-shrink:0;"></div>
+          <div class="sort-pill active" onclick="setSort('album', this)">📋 Álbum</div>
+          <div class="sort-pill" onclick="setSort('code', this)">🔤 Sigla</div>
+          <div class="sort-pill" onclick="setSort('almost', this)">⭐ Casi listos</div>
+        </div>
+        <div style="font-size:11px;color:var(--text2);padding:4px 12px 6px;line-height:1.5;">💡 1 toque = tengo ✅ · 2 = repetida 🔁x2 · 3 = x3 🔁 · 4 = quitar</div>
+      </div>
+      <div class="team-list" id="teamList"></div>
+    </div>
+
+    <!-- FALTANTES PANEL -->
+    <div class="panel" id="panel-missing">
+      <div class="missing-panel">
+        <div class="missing-header">
+          <div class="missing-title">🔍 Me faltan</div>
+        </div>
+        <div style="background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2);border-radius:10px;padding:9px 12px;margin-bottom:10px;font-size:11px;color:var(--text2);line-height:1.5;">
+          💡 Para registrar figuritas recibidas, usá el álbum con filtro <b style="color:var(--accent);">🔍 Me faltan</b> — al marcar una como tenida el contador de abajo suma una que <b style="color:var(--accent);">recibís</b> 🫲
+        </div>
+        <div style="display:flex;gap:6px;padding:0 0 8px;align-items:center;">
+          <span style="font-size:11px;color:var(--text2);font-weight:600;white-space:nowrap;">Ordenar:</span>
+          <button id="missingSortDesc" onclick="setMissingSort('desc')" style="flex:1;background:var(--accent);border:1px solid var(--accent);color:#0f172a;border-radius:20px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;">⬇️ Más faltantes</button>
+          <button id="missingSortAsc" onclick="setMissingSort('asc')" style="flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text2);border-radius:20px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;">⬆️ Casi completos</button>
+        </div>
+        <div class="export-bar">
+          <button class="export-btn btn-pdf" onclick="exportPDF()">📄 Exportar PDF</button>
+          <button class="export-btn btn-drive" onclick="openDriveModal()">☁️ Subir a Drive</button>
+          <button class="export-btn" style="background:#25D366;color:#fff;" onclick="openWA()">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:15px;height:15px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WA
+          </button>
+        </div>
+        <div id="missingList"></div>
+      </div>
+    </div>
+
+    <!-- STATS PANEL -->
+    <div class="panel" id="panel-stats">
+      <div class="stats-panel">
+        <div class="stats-title">📊 Estadísticas</div>
+        <div style="font-size:11px;color:var(--text2);margin:-8px 4px 12px;line-height:1.5;">💡 <b>1 toque</b> = tengo ✅ &nbsp;·&nbsp; <b>2 toques</b> = repetida x2 🔁 &nbsp;·&nbsp; <b>3 toques</b> = repetida x3 🔁 &nbsp;·&nbsp; <b>4 toques</b> = sacar ❌</div>
+        <div class="progress-ring-wrap">
+          <svg viewBox="0 0 140 140">
+            <circle class="ring-bg" cx="70" cy="70" r="56"/>
+            <circle class="ring-fill" id="ringFill" cx="70" cy="70" r="56"
+              stroke="url(#grad)" stroke-dasharray="351.86" stroke-dashoffset="351.86"
+              transform="rotate(-90 70 70)"/>
+            <defs>
+              <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#10b981"/>
+                <stop offset="100%" stop-color="#22d3ee"/>
+              </linearGradient>
+            </defs>
+            <text class="ring-pct" id="ringPct" x="70" y="64">0%</text>
+            <text class="ring-lbl" x="70" y="82">completado</text>
+          </svg>
+        </div>
+        <div class="stats-grid">
+          <div class="stats-card green">
+            <div class="stats-card-num" id="sc-have">0</div>
+            <div class="stats-card-lbl">Figuritas tengo</div>
+          </div>
+          <div class="stats-card red">
+            <div class="stats-card-num" id="sc-miss">0</div>
+            <div class="stats-card-lbl">Me faltan</div>
+          </div>
+          <div class="stats-card gold">
+            <div class="stats-card-num" id="sc-complete">0</div>
+            <div class="stats-card-lbl">Equipos 100%</div>
+          </div>
+          <div class="stats-card blue">
+            <div class="stats-card-num" id="sc-teams">0</div>
+            <div class="stats-card-lbl">Total equipos</div>
+          </div>
+          <div class="stats-card gold" style="grid-column:1/-1;">
+            <div class="stats-card-num" id="sc-repeated">0</div>
+            <div class="stats-card-lbl">🔁 Figuritas repetidas</div>
+          </div>
+        </div>
+        <div class="team-ranking">
+          <div class="ranking-title">🏅 Más completos</div>
+          <div id="rankingList"></div>
+        </div>
+        <div class="danger-zone">
+          <button class="btn-reset" onclick="confirmReset()">🗑️ Resetear álbum</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- REPETIDAS PANEL -->
+    <div class="panel" id="panel-repeated">
+    <div class="missing-panel" style="padding-bottom:80px;">
+      <div class="missing-header">
+        <div class="missing-title">🔁 Repetidas</div>
+      </div>
+      <div style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);border-radius:10px;padding:9px 12px;margin-bottom:10px;font-size:11px;color:var(--text2);line-height:1.5;">
+        💡 Al bajar una figurita de <b style="color:var(--gold);">repetida → verde</b>, el contador de abajo suma una que <b style="color:var(--gold);">entregás</b> 🫱
+      </div>
+      <div class="export-bar" style="padding-bottom:8px;">
+        <button class="export-btn" style="background:#25D366;color:#fff;" onclick="openWA_repeated()">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="width:15px;height:15px;flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Compartir por WhatsApp
+        </button>
+      </div>
+      <div id="repeatedList"></div>
+    </div>
+  </div>
+
+    <!-- MATCHMAKER PANEL -->
+    <div class="panel" id="panel-matchmaker">
+      <div class="missing-panel" style="padding-bottom:80px;">
+        <div class="missing-header">
+          <div class="missing-title">🤝 Matchmaker de Repes</div>
+        </div>
+        <div style="background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.25);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:12px;line-height:1.6;color:var(--text);">
+          <strong style="color:var(--accent);">¿Cómo funciona?</strong><br>
+          Pegá las repetidas de tu amigo, o <strong style="color:var(--gold);">sacale una foto a su lista</strong> y el sistema encuentra el intercambio ideal al toque.
+        </div>
+
+        <!-- INPUT AREA -->
+        <div style="margin-bottom:10px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;padding:0 2px;">
+            <div style="font-size:12px;font-weight:700;color:var(--text2);">📋 Repetidas de tu amigo</div>
+            <!-- Camera button -->
+            <button onclick="abrirCamara()" style="display:flex;align-items:center;gap:5px;background:linear-gradient(135deg,#f59e0b,#d97706);border:none;border-radius:20px;color:#1a1a1a;font-size:11px;font-weight:800;padding:6px 12px;cursor:pointer;flex-shrink:0;transition:opacity .2s;" ontouchstart="this.style.opacity='.75'" ontouchend="this.style.opacity='1'">
+              📷 Sacar foto
+            </button>
+          </div>
+          <!-- Hidden file input for camera -->
+          <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none" onchange="procesarFoto(this)">
+          <!-- OCR status bar (hidden by default) -->
+          <div id="ocrStatus" style="display:none;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:10px 12px;margin-bottom:8px;font-size:12px;font-weight:600;color:var(--gold);text-align:center;"></div>
+          <!-- Preview image (hidden by default) -->
+          <div id="photoPreviewWrap" style="display:none;margin-bottom:8px;border-radius:10px;overflow:hidden;border:2px solid var(--border);position:relative;">
+            <img id="photoPreview" style="width:100%;max-height:160px;object-fit:cover;display:block;">
+            <button onclick="cerrarFoto()" style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6);border:none;border-radius:50%;width:26px;height:26px;color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;">✕</button>
+          </div>
+          <textarea id="matchmakerInput" placeholder="Pegá acá la lista de repetidas de tu amigo&#10;Formatos válidos:&#10;  MEX 4, MEX 12, RSA 5, CAN 18&#10;  ARG3 BRA7 ESP11&#10;  ARG 03 - BRA 07 - ESP 11" style="width:100%;min-height:120px;background:var(--bg);border:2px solid var(--border);border-radius:12px;color:var(--text);font-size:13px;padding:12px;resize:vertical;font-family:'Segoe UI',system-ui,sans-serif;outline:none;transition:border-color .2s;line-height:1.5;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+          <div style="font-size:10px;color:var(--text2);padding:4px 2px;">💡 Si la foto da texto raro, corregilo acá antes de calcular.</div>
+        </div>
+
+        <button onclick="calcularMatch()" style="width:100%;background:linear-gradient(90deg,#16a34a,#0d9488);border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:800;padding:14px;cursor:pointer;letter-spacing:.3px;transition:opacity .2s,transform .1s;margin-bottom:16px;" onmousedown="this.style.transform='scale(.97)'" onmouseup="this.style.transform=''" ontouchstart="this.style.transform='scale(.97)'" ontouchend="this.style.transform=''">
+          🔍 CALCULAR MATCH
+        </button>
+        <div id="matchResult"></div>
+      </div>
+    </div>
+
+    <!-- LOG PANEL -->
+    <div class="panel" id="panel-log">
+      <div style="padding:12px 8px 80px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:0 4px;">
+          <div style="font-size:16px;font-weight:800;">🗒️ Historial de cambios</div>
+          <div style="display:flex;gap:6px;">
+            <button onclick="exportLog()" style="font-size:11px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:20px;padding:5px 12px;cursor:pointer;font-weight:700;">📋 Copiar</button>
+            <button onclick="confirmClearLog()" style="font-size:11px;background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.3);color:#f87171;border-radius:20px;padding:5px 12px;cursor:pointer;font-weight:700;">🗑️ Borrar</button>
+          </div>
+        </div>
+        <div style="background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2);border-radius:10px;padding:9px 12px;margin-bottom:12px;font-size:11px;color:var(--text2);line-height:1.5;">
+          📌 Cada toque en una figurita queda registrado acá con fecha y hora. Ideal para saber qué cambiaste en cada intercambio.
+        </div>
+        <!-- Filter buttons -->
+        <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;">
+          <button id="logFilterAll" onclick="setLogFilter('all')" style="flex:1;padding:6px 8px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:2px solid var(--accent);background:var(--accent);color:#0f172a;white-space:nowrap;">📋 Todos</button>
+          <button id="logFilterGive" onclick="setLogFilter('give')" style="flex:1;padding:6px 8px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:var(--surface2);color:var(--text2);white-space:nowrap;">🫱 Entregué</button>
+          <button id="logFilterReceive" onclick="setLogFilter('receive')" style="flex:1;padding:6px 8px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:var(--surface2);color:var(--text2);white-space:nowrap;">🫲 Recibí</button>
+          <button id="logFilterOther" onclick="setLogFilter('other')" style="flex:1;padding:6px 8px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:var(--surface2);color:var(--text2);white-space:nowrap;">📝 Otros</button>
+        </div>
+        <div id="logList"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bottom-safe"></div>
+
+  <!-- EXCHANGE COUNTER BAR (inside .app so it's within the stacking context) -->
+  <div class="exchange-bar" id="exchangeBar">
+    <div class="xbar-side give">
+      <div class="xbar-num" id="xbarGiveNum">0</div>
+      <div class="xbar-lbl">🫱 Entrego</div>
+    </div>
+    <div class="xbar-middle">
+      <div class="xbar-emoji">🤝</div>
+      <button class="xbar-reset" onclick="resetExchangeCounter()">Limpiar</button>
+    </div>
+    <div class="xbar-side receive">
+      <div class="xbar-num" id="xbarReceiveNum">0</div>
+      <div class="xbar-lbl">🫲 Recibo</div>
+    </div>
+  </div>
+</div>
+
+<!-- CLOUD SYNC MODAL -->
+<div class="sync-modal-overlay" id="syncModal">
+  <div class="sync-modal-sheet">
+    <div class="sync-modal-top">
+      <div class="sync-modal-title">☁️ Sincronizar en la Nube</div>
+      <span class="sync-modal-close" onclick="closeSyncModal()">✕</span>
+    </div>
+    <div class="sync-modal-body" id="syncModalBody">
+      <!-- contenido dinámico -->
+    </div>
+  </div>
+</div>
+
+<!-- SAVE/LOAD DATA MODAL -->
+<div class="modal-overlay" id="saveLoadModal" onclick="closeSaveLoadModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-top">
+      <div class="modal-top-title">💾 Guardar / Cargar datos</div>
+      <span class="modal-close" onclick="document.getElementById('saveLoadModal').classList.remove('open')">✕</span>
+    </div>
+    <div class="modal-body" style="gap:12px;display:flex;flex-direction:column;">
+      <div style="background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.25);border-radius:10px;padding:12px;font-size:12px;line-height:1.6;color:var(--text);">
+        <strong style="color:var(--accent);">¿Para qué sirve esto?</strong><br>
+        Exportá tus datos como archivo JSON para hacer backup o pasar tu progreso a otro dispositivo. Después lo podés volver a cargar acá.
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--text);">⬇️ Guardar mis datos</div>
+        <button onclick="exportJSON()" style="width:100%;background:var(--green);border:none;color:#fff;border-radius:12px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;">📥 Descargar JSON con mi progreso</button>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:var(--text);">⬆️ Cargar datos guardados</div>
+        <label style="display:block;width:100%;background:var(--surface2);border:2px dashed var(--border);color:var(--text2);border-radius:12px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;text-align:center;" id="importLabel">
+          📂 Seleccionar archivo JSON
+          <input type="file" accept=".json" id="importFile" style="display:none" onchange="importJSON(this)">
+        </label>
+        <div id="importStatus" style="margin-top:6px;font-size:12px;color:var(--text2);text-align:center;min-height:18px;"></div>
+      </div>
+    </div>
+    <div style="padding:12px 14px;border-top:1px solid var(--border);">
+      <button onclick="document.getElementById('saveLoadModal').classList.remove('open')" style="width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:12px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- PDF OUTPUT (hidden, only visible when printing) -->
+<div class="pdf-output" id="pdfOutput"></div>
+
+<!-- GOOGLE DRIVE MODAL -->
+<div class="drive-modal-overlay" id="driveModal">
+  <div class="drive-modal-sheet">
+    <div class="drive-modal-top">
+      <div class="drive-modal-title">☁️ Guardar en Google Drive</div>
+      <span class="drive-modal-close" onclick="closeDriveModal()">✕</span>
+    </div>
+    <div class="drive-modal-body">
+      <div class="drive-info-box">
+        <strong>¿Cómo funciona?</strong><br>
+        Descargá el archivo HTML de tu álbum y guardalo en Google Drive. Desde ahí podés abrirlo en cualquier celu o PC con el navegador.
+      </div>
+      <div class="drive-steps">
+        <div class="drive-step">
+          <div class="drive-step-num">1</div>
+          <div class="drive-step-txt">Tocá <strong>"Descargar álbum"</strong> — se descarga el archivo <strong>Album_Mundial2026.html</strong> con todo tu progreso guardado adentro.</div>
+        </div>
+        <div class="drive-step">
+          <div class="drive-step-num">2</div>
+          <div class="drive-step-txt">Abrí <strong>Google Drive</strong> en tu celu o PC (drive.google.com) y subí el archivo descargado.</div>
+        </div>
+        <div class="drive-step">
+          <div class="drive-step-num">3</div>
+          <div class="drive-step-txt">Desde cualquier dispositivo, abrí Drive, buscá el archivo y tocá los <strong>3 puntos → Abrir con → Navegador</strong> para usarlo.</div>
+        </div>
+        <div class="drive-step">
+          <div class="drive-step-num">4</div>
+          <div class="drive-step-txt">💡 <strong>Tip:</strong> Cada vez que actualices tu progreso, repetí el proceso para tener la versión más nueva en Drive.</div>
+        </div>
+      </div>
+    </div>
+    <div class="drive-modal-actions">
+      <button class="btn-drive-cancel" onclick="closeDriveModal()">Cancelar</button>
+      <button class="btn-drive-download" onclick="downloadForDrive()">⬇️ Descargar álbum</button>
+    </div>
+  </div>
+</div>
+
+<!-- WHATSAPP MODAL -->
+<div class="modal-overlay" id="waModal" onclick="closeWA(event)">
+  <div class="modal-sheet">
+    <div class="modal-top">
+      <div class="modal-top-title" id="waModalTitle">📤 Compartir por WhatsApp</div>
+      <span class="modal-close" onclick="closeWA()">✕</span>
+    </div>
+    <div class="modal-body" style="padding-top:10px;">
+      <div id="waTypeSelector" style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;">
+        <button id="waBtnFaltantes" onclick="setWAType('faltantes')" style="flex:1;padding:8px 4px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid var(--accent);background:var(--accent);color:#0f172a;">🔍 Solo faltantes</button>
+        <button id="waBtnRepetidas" onclick="setWAType('repetidas')" style="flex:1;padding:8px 4px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:var(--surface2);color:var(--text2);">🔁 Solo repetidas</button>
+        <button id="waBtnAmbas" onclick="setWAType('ambas')" style="flex:1;padding:8px 4px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:var(--surface2);color:var(--text2);">📋 Ambas</button>
+      </div>
+      <textarea class="modal-textarea" id="waText" readonly></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-copy" onclick="copyText()">📋 Copiar</button>
+      <button class="btn-wa" onclick="sendWA()">📲 Abrir WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const CDN_FLAG = iso => `https://flagcdn.com/w40/${iso.toLowerCase()}.png`;
+
+function getFlagImg(t, size) {
+  const sm = size === 'sm';
+  const w = sm ? '24px' : '36px';
+  const h = sm ? '17px' : '25px';
+  const r = sm ? '3px' : '4px';
+  const fs = sm ? '20px' : '22px';
+  const fallback = sm
+    ? `<span class=\\'missing-flag-sm\\'>${getEmoji(t)}</span>`
+    : `<span style=\\'font-size:22px\\'>${getEmoji(t)}</span>`;
+  if (t.code === 'FWC1') {
+    const s = sm ? '24px' : '36px';
+    return `<div style="width:${s};height:${s};background:linear-gradient(135deg,#064e3b,#0f766e);border-radius:${r};display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:${sm?'6':'8'}px;font-weight:900;color:#f59e0b;letter-spacing:1px;line-height:1;">FIFA</span><span style="font-size:${sm?'11':'14'}px;line-height:1;">⚽</span></div>`;
+  }
+  if (t.code === 'FWC2') {
+    const s = sm ? '24px' : '36px';
+    return `<div style="width:${s};height:${s};background:linear-gradient(135deg,#1e3a8a,#1d4ed8);border-radius:${r};display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:${sm?'5.5':'7'}px;font-weight:900;color:#f59e0b;letter-spacing:.5px;line-height:1.3;">FIFA</span><span style="font-size:${sm?'5.5':'7'}px;font-weight:900;color:#fff;letter-spacing:.3px;line-height:1.3;">HIST</span></div>`;
+  }
+  if (t.code === 'SCO') return `<img src="https://flagcdn.com/w40/gb-sct.png" alt="Scotland" style="width:${w};height:${h};border-radius:${r};object-fit:cover;" onerror="this.outerHTML='${fallback}'">`;
+  if (t.code === 'ENG') return `<img src="https://flagcdn.com/w40/gb-eng.png" alt="England" style="width:${w};height:${h};border-radius:${r};object-fit:cover;" onerror="this.outerHTML='${fallback}'">`;
+  if (t.iso) return `<img src="${CDN_FLAG(t.iso)}" alt="${t.name}" style="width:${w};height:${h};border-radius:${r};object-fit:cover;" onerror="this.outerHTML='${fallback}'">`;
+  return sm ? `<span class="missing-flag-sm">${getEmoji(t)}</span>` : `<span style="font-size:${fs}">${getEmoji(t)}</span>`;
+}
+
+const TEAMS = [
+  { code:"FWC1", name:"FIFA World Cup 2026", iso:null, emoji:"🏆", total:9,  start:0 },
+  { code:"MEX",  name:"Mexico",              iso:"mx", total:20, page:8  },
+  { code:"RSA",  name:"South Africa",        iso:"za", total:20, page:10 },
+  { code:"KOR",  name:"Korea",               iso:"kr", total:20, page:12 },
+  { code:"CZE",  name:"Czechia",             iso:"cz", total:20, page:14 },
+  { code:"CAN",  name:"Canada",              iso:"ca", total:20, page:16 },
+  { code:"BIH",  name:"Bosnia-Herzegovina",  iso:"ba", total:20, page:18 },
+  { code:"QAT",  name:"Qatar",               iso:"qa", total:20, page:20 },
+  { code:"SUI",  name:"Switzerland",         iso:"ch", total:20, page:22 },
+  { code:"BRA",  name:"Brazil",              iso:"br", total:20, page:24 },
+  { code:"MAR",  name:"Morocco",             iso:"ma", total:20, page:26 },
+  { code:"HAI",  name:"Haiti",               iso:"ht", total:20, page:28 },
+  { code:"SCO",  name:"Scotland",            iso:null, emoji:"🏴󠁧󠁢󠁳󠁣󠁴󠁿", total:20, page:30 },
+  { code:"USA",  name:"USA",                 iso:"us", total:20, page:32 },
+  { code:"PAR",  name:"Paraguay",            iso:"py", total:20, page:34 },
+  { code:"AUS",  name:"Australia",           iso:"au", total:20, page:36 },
+  { code:"TUR",  name:"Turkiye",             iso:"tr", total:20, page:38 },
+  { code:"GER",  name:"Germany",             iso:"de", total:20, page:40 },
+  { code:"CUW",  name:"Curacao",             iso:"cw", total:20, page:42 },
+  { code:"CIV",  name:"Cote d'Ivoire",       iso:"ci", total:20, page:44 },
+  { code:"ECU",  name:"Ecuador",             iso:"ec", total:20, page:46 },
+  { code:"NED",  name:"Netherlands",         iso:"nl", total:20, page:48 },
+  { code:"JPN",  name:"Japan",               iso:"jp", total:20, page:50 },
+  { code:"SWE",  name:"Sweden",              iso:"se", total:20, page:52 },
+  { code:"TUN",  name:"Tunisia",             iso:"tn", total:20, page:54 },
+  { code:"BEL",  name:"Belgium",             iso:"be", total:20, page:58 },
+  { code:"EGY",  name:"Egypt",               iso:"eg", total:20, page:60 },
+  { code:"IRN",  name:"Iran",                iso:"ir", total:20, page:62 },
+  { code:"NZL",  name:"New Zealand",         iso:"nz", total:20, page:64 },
+  { code:"ESP",  name:"Spain",               iso:"es", total:20, page:66 },
+  { code:"CPV",  name:"Cabo Verde",          iso:"cv", total:20, page:68 },
+  { code:"KSA",  name:"Arabia Saudita",      iso:"sa", total:20, page:70 },
+  { code:"URU",  name:"Uruguay",             iso:"uy", total:20, page:72 },
+  { code:"FRA",  name:"France",              iso:"fr", total:20, page:74 },
+  { code:"SEN",  name:"Senegal",             iso:"sn", total:20, page:76 },
+  { code:"IRQ",  name:"Iraq",                iso:"iq", total:20, page:78 },
+  { code:"NOR",  name:"Norway",              iso:"no", total:20, page:80 },
+  { code:"ARG",  name:"Argentina",           iso:"ar", total:20, page:82 },
+  { code:"ALG",  name:"Algeria",             iso:"dz", total:20, page:84 },
+  { code:"AUT",  name:"Austria",             iso:"at", total:20, page:86 },
+  { code:"JOR",  name:"Jordan",              iso:"jo", total:20, page:88 },
+  { code:"POR",  name:"Portugal",            iso:"pt", total:20, page:90 },
+  { code:"COD",  name:"Congo DR",            iso:"cd", total:20, page:92 },
+  { code:"UZB",  name:"Uzbekistan",          iso:"uz", total:20, page:94 },
+  { code:"COL",  name:"Colombia",            iso:"co", total:20, page:96 },
+  { code:"ENG",  name:"England",             iso:null, emoji:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", total:20, page:98  },
+  { code:"CRO",  name:"Croatia",             iso:"hr", total:20, page:100 },
+  { code:"GHA",  name:"Ghana",               iso:"gh", total:20, page:102 },
+  { code:"PAN",  name:"Panama",              iso:"pa", total:20, page:104 },
+  { code:"FWC2", name:"FIFA WC History",     iso:null, emoji:"📖", total:11, start:9 },
+  { code:"CC",   name:"Coca Cola",           iso:null, emoji:"🥤", total:14 },
+];
+
+const EMOJI_MAP = {
+  FWC1:"🏆",MEX:"🇲🇽",RSA:"🇿🇦",KOR:"🇰🇷",CZE:"🇨🇿",CAN:"🇨🇦",BIH:"🇧🇦",QAT:"🇶🇦",SUI:"🇨🇭",
+  BRA:"🇧🇷",MAR:"🇲🇦",HAI:"🇭🇹",SCO:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",USA:"🇺🇸",PAR:"🇵🇾",AUS:"🇦🇺",TUR:"🇹🇷",
+  GER:"🇩🇪",CUW:"🇨🇼",CIV:"🇨🇮",ECU:"🇪🇨",NED:"🇳🇱",JPN:"🇯🇵",SWE:"🇸🇪",TUN:"🇹🇳",
+  BEL:"🇧🇪",EGY:"🇪🇬",IRN:"🇮🇷",NZL:"🇳🇿",ESP:"🇪🇸",CPV:"🇨🇻",KSA:"🇸🇦",URU:"🇺🇾",
+  FRA:"🇫🇷",SEN:"🇸🇳",IRQ:"🇮🇶",NOR:"🇳🇴",ARG:"🇦🇷",ALG:"🇩🇿",AUT:"🇦🇹",JOR:"🇯🇴",
+  POR:"🇵🇹",COD:"🇨🇩",UZB:"🇺🇿",COL:"🇨🇴",ENG:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",CRO:"🇭🇷",GHA:"🇬🇭",PAN:"🇵🇦",
+  FWC2:"📖",CC:"🥤"
+};
+
+// ── STATE ──
+let state = {};
+let activeFilter = 'all';
+let activeSort = 'album'; // 'album' | 'code' | 'name'
+let activeMissingSort = 'desc'; // 'desc' = más faltantes primero | 'asc' = menos faltantes primero
+let saveTimer = null;
+
+// ── EXCHANGE COUNTER ──
+// Tracks figuritas during a trading session
+// giveCount: repeated → owned (giving away to friend)
+// receiveCount: missing → owned (receiving from friend)
+let xbarGive = 0;
+let xbarReceive = 0;
+let xbarActive = false; // becomes true when in repeated or missing panel
+
+function updateExchangeBar() {
+  const bar = document.getElementById('exchangeBar');
+  if (!bar) return;
+  document.getElementById('xbarGiveNum').textContent = xbarGive;
+  document.getElementById('xbarReceiveNum').textContent = xbarReceive;
+  if (xbarActive) {
+    bar.classList.add('visible');
+  } else {
+    bar.classList.remove('visible');
+  }
+}
+
+function resetExchangeCounter() {
+  xbarGive = 0;
+  xbarReceive = 0;
+  updateExchangeBar();
+}
+
+function setExchangeMode(active) {
+  xbarActive = active;
+  console.log('[XBar] setExchangeMode:', active, '| give:', xbarGive, '| receive:', xbarReceive);
+  updateExchangeBar();
+}
+
+// ── CHANGE LOG ──
+const LOG_KEY = 'mundial2026_log';
+const LOG_MAX = 500; // máximo entradas guardadas
+let activeLogFilter = 'all';
+
+function loadLog() {
+  try { return JSON.parse(localStorage.getItem(LOG_KEY) || '[]'); } catch(e) { return []; }
+}
+function saveLog(entries) {
+  try { localStorage.setItem(LOG_KEY, JSON.stringify(entries)); } catch(e) {}
+}
+
+function statLabel(v) {
+  if (!v || v === false) return '⬜ vacía';
+  if (v === true)        return '✅ tengo';
+  if (v === 2)           return '🔁 x2';
+  if (v === 3)           return '🔁 x3';
+  return String(v);
+}
+
+// Classify entry type for filtering/display
+// give: was repeated → now owned/missing (entregué una)
+// receive: was missing → now owned (recibí una)
+// owned: other → owned (marqué como tenida)
+// repeated: owned → repeated (marqué repetida)
+// removed: → missing/false (saqué)
+function classifyEntry(from, to) {
+  const wasRep = from === 2 || from === 3;
+  const wasMiss = !from || from === false;
+  const nowOwned = to === true;
+  const nowRep = to === 2 || to === 3;
+  const nowMiss = !to || to === false;
+
+  if (wasRep && !nowRep) return 'give';       // entregué
+  if (wasRep && nowRep && to < from) return 'give'; // x3→x2
+  if (wasMiss && nowOwned) return 'receive';  // recibí / agregué
+  if (!wasMiss && nowRep) return 'repeated';  // marqué repetida
+  if (!wasMiss && nowMiss) return 'removed';  // saqué
+  if (nowOwned) return 'owned';               // marqué tenida
+  return 'other';
+}
+
+function addLogEntry(code, num, fromVal, toVal) {
+  const team = TEAMS.find(t => t.code === code);
+  const teamName = team ? team.name : code;
+  const emoji = team ? getEmoji(team) : '🏳️';
+  const type = classifyEntry(fromVal, toVal);
+  const now = new Date();
+  const entry = {
+    ts: now.toISOString(),
+    date: now.toLocaleDateString('es-AR', { day:'2-digit', month:'2-digit', year:'numeric' }),
+    time: now.toLocaleTimeString('es-AR', { hour:'2-digit', minute:'2-digit', second:'2-digit' }),
+    code,
+    num,
+    teamName,
+    emoji,
+    from: fromVal,
+    to: toVal,
+    type,
+    filter: activeFilter // qué filtro estaba activo
+  };
+  const log = loadLog();
+  log.unshift(entry); // newest first
+  if (log.length > LOG_MAX) log.splice(LOG_MAX);
+  saveLog(log);
+}
+
+function badgeText(type) {
+  switch(type) {
+    case 'give':     return '🫱 Entregué';
+    case 'receive':  return '🫲 Recibí';
+    case 'owned':    return '✅ Tengo';
+    case 'repeated': return '🔁 Repetida';
+    case 'removed':  return '❌ Saqué';
+    default:         return '📝 Cambio';
+  }
+}
+
+function setLogFilter(f) {
+  activeLogFilter = f;
+  const btns = { all:'logFilterAll', give:'logFilterGive', receive:'logFilterReceive', other:'logFilterOther' };
+  Object.entries(btns).forEach(([key, id]) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    const active = key === f;
+    btn.style.background = active ? 'var(--accent)' : 'var(--surface2)';
+    btn.style.borderColor = active ? 'var(--accent)' : 'var(--border)';
+    btn.style.color = active ? '#0f172a' : 'var(--text2)';
+  });
+  buildLogPanel();
+}
+
+function buildLogPanel() {
+  const container = document.getElementById('logList');
+  if (!container) return;
+  let entries = loadLog();
+
+  // Apply filter
+  if (activeLogFilter === 'give') {
+    entries = entries.filter(e => e.type === 'give');
+  } else if (activeLogFilter === 'receive') {
+    entries = entries.filter(e => e.type === 'receive');
+  } else if (activeLogFilter === 'other') {
+    entries = entries.filter(e => e.type !== 'give' && e.type !== 'receive');
+  }
+
+  if (entries.length === 0) {
+    container.innerHTML = `<div class="log-empty">
+      <div class="emoji">🗒️</div>
+      <div class="txt">Sin entradas en el log</div>
+      <div class="sub">Cada toque en una figurita aparece acá</div>
+    </div>`;
+    return;
+  }
+
+  // Group by date
+  const byDate = {};
+  entries.forEach(e => {
+    if (!byDate[e.date]) byDate[e.date] = [];
+    byDate[e.date].push(e);
+  });
+
+  let html = '';
+  Object.entries(byDate).forEach(([date, items]) => {
+    html += `<div class="log-day-header">📅 ${date} <span style="font-size:10px;font-weight:600;color:var(--text2);">(${items.length})</span></div>`;
+    items.forEach(e => {
+      const numLbl = e.num === 0 ? '00' : String(e.num).padStart(2, '0');
+      const fromLbl = statLabel(e.from);
+      const toLbl   = statLabel(e.to);
+      html += `<div class="log-entry ${e.type}">
+        <div class="log-chip ${e.type}">
+          <span style="font-size:8px;opacity:.8;">${e.code}</span>
+          <span class="log-num">${numLbl}</span>
+        </div>
+        <div class="log-info">
+          <div class="log-desc">${e.emoji} ${e.teamName}</div>
+          <div class="log-time">${e.time} &nbsp;·&nbsp; ${fromLbl} → ${toLbl}</div>
+        </div>
+        <div class="log-badge ${e.type}">${badgeText(e.type)}</div>
+      </div>`;
+    });
+  });
+
+  container.innerHTML = html;
+}
+
+function exportLog() {
+  const entries = loadLog();
+  if (entries.length === 0) {
+    alert('No hay entradas en el log.');
+    return;
+  }
+  const lines = ['📋 HISTORIAL DE CAMBIOS – ÁLBUM MUNDIAL 2026', ''];
+  let currentDate = '';
+  entries.forEach(e => {
+    if (e.date !== currentDate) {
+      currentDate = e.date;
+      lines.push(`── ${e.date} ──`);
+    }
+    const numLbl = e.num === 0 ? '00' : String(e.num).padStart(2, '0');
+    lines.push(`${e.time}  ${badgeText(e.type).padEnd(14)}  ${e.emoji} ${e.code} ${numLbl}  (${statLabel(e.from)} → ${statLabel(e.to)})`);
+  });
+  lines.push('', `Exportado desde Álbum Mundial 2026 📱`);
+  const text = lines.join('\n');
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('logFilterAll').closest('div').querySelector('button');
+    // Show feedback on copy button
+    const copyBtn = document.querySelector('[onclick="exportLog()"]');
+    if (copyBtn) { copyBtn.textContent = '✅ Copiado'; setTimeout(() => copyBtn.textContent = '📋 Copiar', 2000); }
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+}
+
+function confirmClearLog() {
+  if (confirm('¿Borrar todo el historial? Esta acción no se puede deshacer.')) {
+    saveLog([]);
+    buildLogPanel();
+  }
+}
+
+function loadState() {
+  try { const s = localStorage.getItem('mundial2026app'); if (s) state = JSON.parse(s); } catch(e) {}
+  TEAMS.forEach(t => { if (!state[t.code]) state[t.code] = {}; });
+}
+
+function saveState() {
+  try { localStorage.setItem('mundial2026app', JSON.stringify(state)); } catch(e) {}
+  saveProgressSnapshot();
+  const badge = document.getElementById('saveBadge');
+  badge.classList.add('saving');
+  badge.textContent = 'Guardando…';
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    badge.classList.remove('saving');
+    badge.textContent = 'Guardado ✓';
+  }, 700);
+  // Auto cloud sync
+  if (getSyncAuto && getSyncAuto() && getSyncPin && getSyncPin()) {
+    cloudUpload(getSyncPin()).catch(()=>{});
+  }
+}
+
+function getStickers(team) {
+  const start = team.start !== undefined ? team.start : 1;
+  return Array.from({ length: team.total }, (_, i) => start + i);
+}
+function numLabel(n) { return n === 0 ? '00' : n; }
+function ownedCount(code) { return Object.values(state[code] || {}).filter(v => v === true || v === 2 || v === 3).length; }
+function repeatedCount(code) { return Object.values(state[code] || {}).filter(v => v === 2 || v === 3).length; }
+function totalRepeated() {
+  let r = 0;
+  TEAMS.forEach(t => { r += repeatedCount(t.code); });
+  return r;
+}
+function getEmoji(team) { return team.emoji || EMOJI_MAP[team.code] || '🏳️'; }
+
+// ── TOGGLE ──
+function toggleSticker(code, num) {
+  if (!state[code]) state[code] = {};
+  const cur = state[code][num];
+  const wasRepeated = cur === 2 || cur === 3; // was a repeated sticker
+  const wasMissing = !cur || cur === false;    // was a missing sticker
+
+  // Cycle: vacío → verde(tengo) → x2 → x3 → vacío → verde...
+  if (!cur) {
+    state[code][num] = true;
+  } else if (cur === true) {
+    state[code][num] = 2;
+  } else if (cur === 2) {
+    state[code][num] = 3;
+  } else {
+    state[code][num] = false; // x3 → sin color
+  }
+
+  const newVal = state[code][num];
+  const nowOwned = newVal === true;
+  const nowRepeated = newVal === 2 || newVal === 3;
+  const nowMissing = !newVal || newVal === false;
+
+  // ── Log the change ──
+  addLogEntry(code, num, cur, newVal);
+
+  // ── Exchange counter tracking ──
+  if (xbarActive) {
+    if (activeFilter === 'repeated') {
+      // "Entrego": cualquier transición que REDUCE repetidas
+      // x2→owned, x3→x2, o repeated→false (sacar)
+      const repCountBefore = wasRepeated ? (cur - 1) : 0; // copias extra antes
+      const repCountAfter  = nowRepeated ? (newVal - 1) : 0; // copias extra después
+      if (wasRepeated && !nowRepeated) {
+        // pasó de repetida a owned o vacía → entregaste 1
+        xbarGive = Math.max(0, xbarGive + 1);
+        updateExchangeBar();
+      } else if (wasRepeated && nowRepeated && repCountAfter < repCountBefore) {
+        // x3→x2: igual entregaste 1 copia extra
+        xbarGive = Math.max(0, xbarGive + 1);
+        updateExchangeBar();
+      } else if (!wasRepeated && nowRepeated) {
+        // undo: volviste a marcar como repetida (restar)
+        xbarGive = Math.max(0, xbarGive - 1);
+        updateExchangeBar();
+      }
+    }
+
+    if (activeFilter === 'missing') {
+      // "Recibo": missing→owned
+      if (wasMissing && nowOwned) {
+        xbarReceive = Math.max(0, xbarReceive + 1);
+        updateExchangeBar();
+      }
+      // Undo: owned→missing
+      if (!wasMissing && nowMissing) {
+        xbarReceive = Math.max(0, xbarReceive - 1);
+        updateExchangeBar();
+      }
+    }
+  }
+  saveState();
+  // update chip visually in place (no rebuild)
+  const chip = document.getElementById(`chip-${code}-${num}`);
+  if (chip) {
+    const val = state[code][num];
+    chip.classList.toggle('owned', val === true);
+    chip.classList.toggle('repeated', val === 2);
+    chip.classList.toggle('repeated3', val === 3);
+    chip.setAttribute('data-rep-label', val === 2 ? 'x2' : val === 3 ? 'x3' : '');
+  }
+  // update team card header
+  updateTeamCard(code);
+  updateGlobal();
+  // check team completion
+  checkTeamCompletion(code);
+  // only rebuild list for missing filter (repeated: no refresh, chips stay in place)
+  if (activeFilter === 'missing') {
+    buildTeamList();
+  }
+}
+
+function updateTeamCard(code) {
+  const team = TEAMS.find(t => t.code === code);
+  const owned = ownedCount(code);
+  const pct = Math.round((owned / team.total) * 100);
+  const el = document.getElementById(`tc-${code}`);
+  if (!el) return;
+  el.querySelector('.team-count-big').textContent = `${owned}/${team.total}`;
+  el.querySelector('.team-count-big').className = 'team-count-big' + (owned === team.total ? ' done' : '');
+  el.querySelector('.team-pct-small').textContent = pct + '%';
+  const fill = el.querySelector('.team-bar-fill');
+  fill.style.width = pct + '%';
+  fill.className = 'team-bar-fill' + (owned === team.total ? ' done' : '');
+  el.className = 'team-card' + (owned === team.total ? ' complete' : '');
+}
+
+// ── SUMMARY ROWS (3 filas resumen para filtros Me Faltan / Repetidas) ──
+// Para "repeated" guardamos snapshot de items al construir → chips no desaparecen al bajar a verde
+let _summarySnapshot = null; // { escudos, equipos13, fwc }
+
+function buildSummaryRows(filterType) {
+  const isMissing = filterType === 'missing';
+
+  const isMiss = (code, n) => !(state[code] && (state[code][n] === true || state[code][n] === 2 || state[code][n] === 3));
+  const isRep  = (code, n) => !!(state[code] && (state[code][n] === 2 || state[code][n] === 3));
+
+  // Build interactive chip — always reflects current state
+  const makeChip = (code, n) => {
+    const val = state[code] && state[code][n];
+    const isOwned = val === true;
+    const isRep2  = val === 2;
+    const isRep3  = val === 3;
+    const cls = isOwned ? ' owned' : isRep2 ? ' repeated' : isRep3 ? ' repeated3' : '';
+    const repLabel = isRep2 ? 'x2' : isRep3 ? 'x3' : '';
+    return `<div class="sticker-chip${cls}" id="chip-${code}-${n}" data-rep-label="${repLabel}"
+      style="width:64px;height:54px;flex-direction:column;gap:1px;font-size:10px;"
+      ontouchstart="handleTouch(event,'${code}',${n})"
+      onclick="handleClick(event,'${code}',${n})">
+      <span style="font-size:9px;font-weight:900;opacity:.8;letter-spacing:.3px;">${code}</span>
+      <span style="font-size:13px;font-weight:800;">${numLabel(n)}</span>
+    </div>`;
+  };
+
+  let escudos, equipos13, fwc;
+
+  if (!isMissing && _summarySnapshot) {
+    // Repeated: use existing snapshot so chips don't disappear when state changes
+    ({ escudos, equipos13, fwc } = _summarySnapshot);
+  } else {
+    // Build fresh lists
+    escudos = [];
+    TEAMS.forEach(t => {
+      if (t.code === 'FWC1' || t.code === 'FWC2' || t.code === 'CC') return;
+      const n1 = getStickers(t)[0];
+      if (isMissing ? isMiss(t.code, n1) : isRep(t.code, n1)) escudos.push({ code: t.code, n: n1 });
+    });
+
+    equipos13 = [];
+    TEAMS.forEach(t => {
+      if (t.code === 'FWC1' || t.code === 'FWC2' || t.code === 'CC') return;
+      const n13 = getStickers(t).find(n => n === 13);
+      if (n13 === undefined) return;
+      if (isMissing ? isMiss(t.code, n13) : isRep(t.code, n13)) equipos13.push({ code: t.code, n: n13 });
+    });
+
+    fwc = [];
+    ['FWC1','FWC2'].forEach(code => {
+      const t = TEAMS.find(x => x.code === code);
+      if (!t) return;
+      getStickers(t).forEach(n => {
+        if (isMissing ? isMiss(code, n) : isRep(code, n)) fwc.push({ code, n });
+      });
+    });
+
+    // Save snapshot for repeated so rebuilds keep the same items
+    if (!isMissing) _summarySnapshot = { escudos, equipos13, fwc };
+  }
+
+  const badgeStyle = isMissing ? 'background:var(--red);color:#fff;' : 'background:var(--gold);color:#1a1a1a;';
+  const badgePfx   = isMissing ? '−' : '×';
+
+  const buildRow = (icon, label, items, emptyMsg) => {
+    const count = items.length;
+    const chips = count === 0
+      ? `<span style="font-size:12px;color:${isMissing ? 'var(--green)' : 'var(--text2)'};font-weight:700;padding:4px 0;">${emptyMsg}</span>`
+      : items.map(({code, n}) => makeChip(code, n)).join('');
+    return `<div class="missing-team-block" style="border-color:${isMissing?'var(--border)':'rgba(245,158,11,.3)'};">
+      <div class="missing-team-head" style="background:var(--surface2);">
+        <span style="font-size:20px;">${icon}</span>
+        <span class="missing-team-nm">${label}</span>
+        <span style="${badgeStyle}font-size:11px;font-weight:800;border-radius:20px;padding:2px 8px;">${badgePfx}${count}</span>
+      </div>
+      <div class="team-stickers" style="display:flex;flex-wrap:wrap;gap:5px;padding:8px 12px 12px;border-top:1px solid var(--border);">${chips}</div>
+    </div>`;
+  };
+
+  const div = document.createElement('div');
+  div.id = 'summaryRows';
+  div.style.cssText = 'padding:8px 8px 0;display:flex;flex-direction:column;gap:8px;';
+  div.innerHTML =
+    buildRow('🛡️', isMissing ? 'Escudos faltantes' : 'Escudos repetidos',  escudos,   isMissing ? '✅ Todos los escudos' : 'Sin escudos repetidos') +
+    buildRow('⚽',  isMissing ? 'Equipos faltantes' : 'Equipos repetidos',  equipos13, isMissing ? '✅ Todos los nro 13'  : 'Sin nro 13 repetidos') +
+    buildRow('🏆', isMissing ? 'FWC faltantes'      : 'FWC repetidas',      fwc,       isMissing ? '✅ Todas las FWC'     : 'Sin FWC repetidas') +
+    `<div style="height:1px;background:var(--border);margin:2px 0 4px;"></div>`;
+  return div;
+}
+
+// Rebuild summary rows in-place (keeps snapshot for repeated)
+function rebuildSummaryRows() {
+  if (activeFilter !== 'missing' && activeFilter !== 'repeated') return;
+  const container = document.getElementById('teamList');
+  const old = document.getElementById('summaryRows');
+  if (old) {
+    const newRows = buildSummaryRows(activeFilter);
+    container.replaceChild(newRows, old);
+  }
+}
+
+// ── BUILD TEAM LIST ──
+function buildTeamList() {
+  const container = document.getElementById('teamList');
+  container.innerHTML = '';
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const sq = document.getElementById('stickerInput').value.trim().toUpperCase();
+
+  // Parse sticker search: "ARG 5", "ARG5", "ARG 05", etc.
+  let stickerCode = null, stickerNum = null;
+  if (sq) {
+    const m = sq.match(/^([A-Z0-9]+)\s+(\d+)$/) || sq.match(/^([A-Z]+)(\d+)$/);
+    if (m) { stickerCode = m[1]; stickerNum = parseInt(m[2], 10); }
+    else { stickerCode = sq; } // solo sigla, sin número
+  }
+
+  let teams = [...TEAMS];
+
+  // Sort
+  if (activeSort === 'code') {
+    teams.sort((a, b) => a.code.localeCompare(b.code));
+  } else if (activeSort === 'almost') {
+    teams.sort((a, b) => {
+      const missingA = a.total - ownedCount(a.code);
+      const missingB = b.total - ownedCount(b.code);
+      return missingA - missingB;
+    });
+  }
+  // 'album' = original TEAMS order (no sort needed)
+
+  // ── Insertar 3 filas resumen si filtro es missing o repeated ──
+  if ((activeFilter === 'missing' || activeFilter === 'repeated') && !q && !sq) {
+    container.appendChild(buildSummaryRows(activeFilter));
+  }
+
+  teams.forEach(team => {
+    const owned = ownedCount(team.code);
+    const pct = Math.round((owned / team.total) * 100);
+    const complete = owned === team.total;
+    const nums = getStickers(team);
+
+    // filter by team search
+    if (q && !team.name.toLowerCase().includes(q) && !team.code.toLowerCase().includes(q)) return;
+    // filter by sticker search
+    if (stickerCode && team.code !== stickerCode) return;
+    if (activeFilter === 'complete' && !complete) return;
+    if (activeFilter === 'incomplete' && complete) return;
+    if (activeFilter === 'missing') {
+      // Show all teams but mark complete ones
+      const hasMissing = nums.some(n => !(state[team.code] && (state[team.code][n] === true || state[team.code][n] === 2 || state[team.code][n] === 3)));
+      if (!hasMissing && !complete) return;
+      // complete teams are shown with a label but no missing chips
+    }
+    if (activeFilter === 'repeated') {
+      const hasRepeated = nums.some(n => state[team.code] && (state[team.code][n] === 2 || state[team.code][n] === 3));
+      if (!hasRepeated && !complete) return;
+      // complete teams shown with label
+    }
+
+    const card = document.createElement('div');
+    card.className = 'team-card' + (complete ? ' complete' : '');
+    card.id = `tc-${team.code}`;
+    const stickersHTML = nums.map(num => {
+      const val = state[team.code] && state[team.code][num];
+      const isOwned = val === true;
+      const isRepeated = val === 2;
+      const isRepeated3 = val === 3;
+      if (activeFilter === 'repeated' && !isRepeated && !isRepeated3) return '';
+      if (activeFilter === 'missing') {
+        const isMissing = !(isOwned || isRepeated || isRepeated3);
+        if (!isMissing) return '';
+      }
+      const isHighlighted = stickerNum !== null && num === stickerNum;
+      const cls = (isOwned ? ' owned' : isRepeated ? ' repeated' : isRepeated3 ? ' repeated3' : '') + (isHighlighted ? ' sticker-highlight' : '');
+      const repLabel = isRepeated ? 'x2' : isRepeated3 ? 'x3' : '';
+      return `<div class="sticker-chip${cls}" id="chip-${team.code}-${num}" data-rep-label="${repLabel}"
+        ontouchstart="handleTouch(event,'${team.code}',${num})"
+        onclick="handleClick(event,'${team.code}',${num})">${numLabel(num)}</div>`;
+    }).join('');
+
+    // Show "Completo" badge for complete teams in filtered views
+    const showCompletoBadge = complete && (activeFilter === 'repeated' || activeFilter === 'missing');
+    const completoHTML = showCompletoBadge
+      ? `<div style="width:100%;padding:6px 0;text-align:center;font-size:12px;font-weight:800;color:var(--green);letter-spacing:.5px;">✅ COMPLETO</div>`
+      : '';
+
+
+    // Auto-expand if sticker search active
+    const autoExpand = (stickerCode && stickerCode === team.code) || activeFilter === 'repeated' || activeFilter === 'missing';
+
+    // Flag display
+    let flagHTML = getFlagImg(team, 'lg');
+
+    card.innerHTML = `
+      <div class="team-card-header" onclick="toggleCard('${team.code}')">
+        <div class="team-flag">${flagHTML}</div>
+        <div class="team-info">
+          <div class="team-name-text">${team.name}</div>
+          <div class="team-subinfo">${team.code} · ${team.total} figuritas${team.page ? ` · 📄 pág. ${team.page}` : ''}</div>
+        </div>
+        <div class="team-progress">
+          <div class="team-count-big${complete?' done':''}"><span style="font-weight:800;opacity:0.85;">${team.code}</span> ${owned}/${team.total}</div>
+          <div class="team-pct-small">${pct}%</div>
+        </div>
+      </div>
+      <div class="team-bar"><div class="team-bar-fill${complete?' done':''}" style="width:${pct}%"></div></div>
+      <div class="team-stickers" id="stickers-${team.code}" style="display:${autoExpand ? 'flex' : 'none'}">${completoHTML}${stickersHTML}</div>`;
+
+    container.appendChild(card);
+  });
+}
+
+// ── TOUCH / CLICK handling ──
+let touchMoved = false;
+function handleTouch(e, code, num) {
+  touchMoved = false;
+  e.currentTarget.addEventListener('touchmove', () => { touchMoved = true; }, { once: true });
+}
+function handleClick(e, code, num) {
+  if (touchMoved) return;
+  e.stopPropagation();
+  toggleSticker(code, num);
+  // haptic if available
+  if (navigator.vibrate) navigator.vibrate(30);
+}
+
+function toggleCard(code) {
+  const s = document.getElementById(`stickers-${code}`);
+  if (!s) return;
+  s.style.display = s.style.display === 'none' ? 'flex' : 'none';
+}
+
+function filterTeams() { buildTeamList(); }
+function setFilter(f, el) {
+  activeFilter = f;
+  _summarySnapshot = null; // reset snapshot on every filter change
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  // Exchange counter: active when in repeated or missing filter
+  setExchangeMode(f === 'repeated' || f === 'missing');
+  buildTeamList();
+}
+function setSort(s, el) {
+  activeSort = s;
+  document.querySelectorAll('.sort-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  buildTeamList();
+}
+
+// ── GLOBAL STATS ──
+function updateGlobal() {
+  let total = 0, owned = 0, repeated = 0;
+  TEAMS.forEach(t => { total += t.total; owned += ownedCount(t.code); repeated += repeatedCount(t.code); });
+  const pct = total ? Math.round((owned / total) * 100) : 0;
+  document.getElementById('globalFill').style.width = pct + '%';
+  document.getElementById('statPct').textContent = pct + '%';
+  document.getElementById('statHave').textContent = owned;
+  document.getElementById('statMiss').textContent = total - owned;
+  document.getElementById('statRep').textContent = repeated;
+  // KPIs sobres (7 figuritas por sobre)
+  const sobreAbiertos = Math.floor(owned / 7);
+  const sobreNecesarios = Math.ceil((total - owned - repeated) / 7);
+  const el1 = document.getElementById('sobreAbiertos');
+  const el2 = document.getElementById('sobreNecesarios');
+  if (el1) el1.textContent = sobreAbiertos;
+  if (el2) el2.textContent = sobreNecesarios;
+  // update stats panel if visible
+  updateStatsPanel(pct, owned, total);
+  updateLedBanner();
+}
+
+function updateLedBanner() {
+  const track = document.getElementById('ledTrack');
+  if (!track) return;
+
+  // Teams with at least 1 missing, sorted by fewest missing first
+  const items = TEAMS.map(t => {
+    const nums = getStickers(t);
+    const missing = nums.filter(n => !(state[t.code] && (state[t.code][n] === true || state[t.code][n] === 2 || state[t.code][n] === 3)));
+    return { ...t, missing: missing.length, total: nums.length };
+  })
+  .filter(t => t.missing > 0 && t.missing <= 10)
+  .sort((a, b) => a.missing - b.missing);
+
+  if (!items.length) {
+    track.innerHTML = '<span class="led-loading">¡No hay equipos casi completos todavía!</span>';
+    return;
+  }
+
+  // LED color palette cycling
+  const colors = ['#ff6ec7','#ff9d00','#facc15','#4ade80','#22d3ee','#a78bfa','#fb7185'];
+
+  // Build items HTML (duplicated for seamless loop)
+  const makeItem = (t, i) => {
+    const color = colors[i % colors.length];
+    const pct = Math.round(((t.total - t.missing) / t.total) * 100);
+    return `<span class="led-item">
+      <span class="led-flag">${getEmoji(t)}</span>
+      <span class="led-team" style="color:${color}">${t.name.toUpperCase()}</span>
+      <span class="led-count" style="color:${color};border:1px solid ${color}40;">faltan ${t.missing} · ${pct}%</span>
+    </span><span class="led-sep">·</span>`;
+  };
+
+  const html = items.map((t,i) => makeItem(t,i)).join('');
+  // Repeat 6 times so the track is always wide enough, then duplicate for seamless loop
+  const repeated = Array(6).fill(html).join('');
+  track.innerHTML = repeated + repeated;
+}
+
+function updateStatsPanel(pct, owned, total) {
+  // Ring
+  const circ = 2 * Math.PI * 56; // 351.86
+  const offset = circ - (pct / 100) * circ;
+  const ring = document.getElementById('ringFill');
+  if (ring) { ring.style.strokeDashoffset = offset; }
+  const rpct = document.getElementById('ringPct');
+  if (rpct) rpct.textContent = pct + '%';
+
+  let complete = 0;
+  TEAMS.forEach(t => { if (ownedCount(t.code) === t.total) complete++; });
+  setEl('sc-have', owned);
+  setEl('sc-miss', total - owned);
+  setEl('sc-complete', complete);
+  setEl('sc-teams', TEAMS.length);
+  setEl('sc-repeated', totalRepeated());
+
+  // Ranking
+  const sorted = TEAMS.map(t => ({
+    ...t,
+    owned: ownedCount(t.code),
+    pct: Math.round((ownedCount(t.code) / t.total) * 100)
+  })).sort((a,b) => b.pct - a.pct);
+
+  const rl = document.getElementById('rankingList');
+  if (rl) {
+    rl.innerHTML = sorted.map((t, i) => {
+      const flag = getFlagImg(t, 'sm');
+      return `<div class="ranking-row">
+        <div class="ranking-pos">${i+1}</div>
+        <div class="ranking-flag">${flag}</div>
+        <div class="ranking-name">${t.name}</div>
+        <div class="ranking-count">${t.pct}%</div>
+        <div class="ranking-bar-wrap"><div class="ranking-bar-inner" style="width:${t.pct}%"></div></div>
+      </div>`;
+    }).join('') || '<div style="padding:16px;text-align:center;color:var(--text2)">Todavía no tenés ninguna</div>';
+  }
+}
+function setEl(id, val) { const e = document.getElementById(id); if (e) e.textContent = val; }
+
+// ── MISSING SORT ──
+function setMissingSort(dir) {
+  activeMissingSort = dir;
+  const btnDesc = document.getElementById('missingSortDesc');
+  const btnAsc  = document.getElementById('missingSortAsc');
+  if (btnDesc) {
+    btnDesc.style.background = dir === 'desc' ? 'var(--accent)' : 'var(--surface)';
+    btnDesc.style.borderColor = dir === 'desc' ? 'var(--accent)' : 'var(--border)';
+    btnDesc.style.color = dir === 'desc' ? '#0f172a' : 'var(--text2)';
+  }
+  if (btnAsc) {
+    btnAsc.style.background = dir === 'asc' ? 'var(--accent)' : 'var(--surface)';
+    btnAsc.style.borderColor = dir === 'asc' ? 'var(--accent)' : 'var(--border)';
+    btnAsc.style.color = dir === 'asc' ? '#0f172a' : 'var(--text2)';
+  }
+  buildMissingPanel();
+}
+
+// ── MISSING PANEL ──
+function buildMissingPanel() {
+  const container = document.getElementById('missingList');
+  const teams = TEAMS.map(t => {
+    const nums = getStickers(t);
+    const missing = nums.filter(n => !(state[t.code] && (state[t.code][n] === true || state[t.code][n] === 2 || state[t.code][n] === 3)));
+    return { ...t, missing };
+  }).filter(t => t.missing.length > 0);
+
+  if (activeMissingSort === 'asc') {
+    teams.sort((a, b) => a.missing.length - b.missing.length);
+  } else {
+    teams.sort((a, b) => b.missing.length - a.missing.length);
+  }
+
+  if (teams.length === 0) {
+    container.innerHTML = `<div class="all-done-msg"><div class="emoji">🏆</div><div class="txt">¡Álbum completo!</div></div>`;
+    return;
+  }
+
+  // ── Fila 1: Escudos faltantes (figurita nro 1 de cada equipo, excluyendo FWC1/FWC2/CC) ──
+  const escudosMissing = [];
+  TEAMS.forEach(t => {
+    if (t.code === 'FWC1' || t.code === 'FWC2' || t.code === 'CC') return;
+    const sticker1 = getStickers(t)[0]; // primer número (nro 1)
+    if (!(state[t.code] && (state[t.code][sticker1] === true || state[t.code][sticker1] === 2 || state[t.code][sticker1] === 3))) {
+      escudosMissing.push(`${t.code} ${numLabel(sticker1)}`);
+    }
+  });
+
+  // ── Fila 2: Equipos – figurita nro 13 de cada equipo (sin FWC ni CC) ──
+  const equiposMissingByTeam = {};
+  TEAMS.forEach(t => {
+    if (t.code === 'FWC1' || t.code === 'FWC2' || t.code === 'CC') return;
+    const n13 = getStickers(t).find(n => n === 13);
+    if (n13 === undefined) return;
+    const missing = !(state[t.code] && (state[t.code][n13] === true || state[t.code][n13] === 2 || state[t.code][n13] === 3));
+    if (missing) equiposMissingByTeam[t.code] = { t, missing: [n13] };
+  });
+  const equiposMissingTotal = Object.values(equiposMissingByTeam).reduce((s, v) => s + v.missing.length, 0);
+
+  // ── Fila 3: FWC (FWC1 + FWC2) ──
+  const fwcMissing = [];
+  ['FWC1','FWC2'].forEach(code => {
+    const t = TEAMS.find(x => x.code === code);
+    if (!t) return;
+    getStickers(t).forEach(n => {
+      if (!(state[t.code] && (state[t.code][n] === true || state[t.code][n] === 2 || state[t.code][n] === 3))) {
+        fwcMissing.push(`${code} ${numLabel(n)}`);
+      }
+    });
+  });
+
+  // Build summary rows HTML
+  const pillStyle = `background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:11px;font-weight:700;border-radius:6px;padding:3px 7px;`;
+
+  let summaryHTML = '';
+
+  // Row 1 – Escudos
+  summaryHTML += `<div class="missing-team-block">
+    <div class="missing-team-head">
+      <span style="font-size:20px;">🛡️</span>
+      <span class="missing-team-nm">Escudos faltantes</span>
+      <span class="missing-badge">−${escudosMissing.length}</span>
+    </div>
+    <div class="missing-nums">${escudosMissing.length === 0
+      ? '<span style="font-size:12px;color:var(--green);font-weight:700;">✅ Todos los escudos</span>'
+      : escudosMissing.map(l => `<span class="missing-num">${l}</span>`).join('')}
+    </div>
+  </div>`;
+
+  // Row 2 – Equipos (nro 13)
+  const equiposNums = Object.values(equiposMissingByTeam).map(({ t, missing }) => {
+    return missing.map(n => `<span class="missing-num" title="${t.name}">${t.code} ${numLabel(n)}</span>`).join('');
+  }).join('');
+  summaryHTML += `<div class="missing-team-block">
+    <div class="missing-team-head">
+      <span style="font-size:20px;">⚽</span>
+      <span class="missing-team-nm">Equipos nro 13 faltantes</span>
+      <span class="missing-badge">−${equiposMissingTotal}</span>
+    </div>
+    <div class="missing-nums">${equiposMissingTotal === 0
+      ? '<span style="font-size:12px;color:var(--green);font-weight:700;">✅ Todos los nro 13</span>'
+      : equiposNums}
+    </div>
+  </div>`;
+
+  // Row 3 – FWC
+  summaryHTML += `<div class="missing-team-block">
+    <div class="missing-team-head">
+      <span style="font-size:20px;">🏆</span>
+      <span class="missing-team-nm">FWC faltantes</span>
+      <span class="missing-badge">−${fwcMissing.length}</span>
+    </div>
+    <div class="missing-nums">${fwcMissing.length === 0
+      ? '<span style="font-size:12px;color:var(--green);font-weight:700;">✅ Todas las FWC</span>'
+      : fwcMissing.map(l => `<span class="missing-num">${l}</span>`).join('')}
+    </div>
+  </div>`;
+
+  // Separator
+  summaryHTML += `<div style="height:1px;background:var(--border);margin:6px 0 10px;"></div>`;
+
+  // In the per-team list below: exclude FWC1/FWC2/CC (shown in summary rows above),
+  // and exclude nro 1 and nro 13 from each team (also shown in summary rows above).
+  const teamsBelow = teams
+    .filter(t => t.code !== 'FWC1' && t.code !== 'FWC2' && t.code !== 'CC')
+    .map(t => {
+      const missingFiltered = t.missing.filter(n => n !== 1 && n !== 13);
+      return { ...t, missingFiltered };
+    })
+    .filter(t => t.missingFiltered.length > 0);
+
+  container.innerHTML = summaryHTML + teamsBelow.map(t => {
+    const flag = getFlagImg(t, 'sm');
+    const missingNums = t.missingFiltered.map(n => `<span class="missing-num">${numLabel(n)}</span>`).join('');
+    return `<div class="missing-team-block">
+      <div class="missing-team-head">
+        ${flag}
+        <span class="missing-team-nm">${t.name} <span style="color:var(--text2);font-weight:500;font-size:11px">${t.code}</span></span>
+        <span class="missing-badge">−${t.missingFiltered.length}</span>
+      </div>
+      <div class="missing-nums">${missingNums}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── TABS ──
+function showTab(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  const idx = ['album','missing','stats','matchmaker','log'].indexOf(name);
+  if (idx >= 0) document.querySelectorAll('.tab')[idx].classList.add('active');
+
+  if (name === 'missing') buildMissingPanel();
+  if (name === 'repeated') buildRepeatedPanel();
+  if (name === 'stats') {
+    let total = 0, owned = 0;
+    TEAMS.forEach(t => { total += t.total; owned += ownedCount(t.code); });
+    updateStatsPanel(total ? Math.round((owned/total)*100) : 0, owned, total);
+  }
+  if (name === 'matchmaker') {
+    document.getElementById('matchResult').innerHTML = '';
+  }
+  if (name === 'log') {
+    buildLogPanel();
+  }
+
+  // Exchange counter: active only in repeated/missing panels
+  setExchangeMode(name === 'repeated' || name === 'missing');
+
+  // scroll to top
+  document.getElementById('content').scrollTop = 0;
+}
+
+// ── WHATSAPP ──
+let currentWAType = 'faltantes';
+
+function setWAType(type) {
+  currentWAType = type;
+  // Update button styles
+  ['faltantes','repetidas','ambas'].forEach(t => {
+    const btn = document.getElementById('waBtn' + t.charAt(0).toUpperCase() + t.slice(1));
+    if (!btn) return;
+    if (t === type) {
+      btn.style.background = 'var(--accent)';
+      btn.style.borderColor = 'var(--accent)';
+      btn.style.color = '#0f172a';
+    } else {
+      btn.style.background = 'var(--surface2)';
+      btn.style.borderColor = 'var(--border)';
+      btn.style.color = 'var(--text2)';
+    }
+  });
+  buildWAMessage(type);
+}
+
+// Categorías para repetidas:
+// ⭐ Especiales  = FWC1 + FWC2
+// 🛡️ Escudos    = figurita nro 1 de cualquier país (excepto FWC1/FWC2/CC)
+// 🥤 Coca Cola   = CC
+// ⚽ Jugadores  = todo lo demás
+function buildRepeatedSection() {
+  const cats = { especiales: [], escudos: [], cocacola: [], jugadoresByTeam: {} };
+  TEAMS.forEach(t => {
+    const nums = getStickers(t);
+    nums.filter(n => state[t.code] && (state[t.code][n] === 2 || state[t.code][n] === 3)).forEach(n => {
+      const cnt = state[t.code][n] - 1; // copias extra
+      const label = `${t.code} ${numLabel(n)}`;
+      const entries = Array.from({length: cnt}, () => label);
+      if (t.code === 'FWC1' || t.code === 'FWC2') {
+        cats.especiales.push(...entries);
+      } else if (t.code === 'CC') {
+        cats.cocacola.push(...entries);
+      } else if (Number(n) === 1) {
+        cats.escudos.push(...entries);
+      } else {
+        if (!cats.jugadoresByTeam[t.code]) cats.jugadoresByTeam[t.code] = [];
+        cats.jugadoresByTeam[t.code].push(...entries);
+      }
+    });
+  });
+  const jugLines = Object.entries(cats.jugadoresByTeam).map(([code, arr]) => arr.join(' - ')).join('\n');
+  const jugTotal = Object.values(cats.jugadoresByTeam).reduce((s, a) => s + a.length, 0);
+  const total = cats.especiales.length + cats.escudos.length + cats.cocacola.length + jugTotal;
+  return { cats, jugLines, jugTotal, total };
+}
+
+// Categorías para faltantes (mismo criterio):
+// ⭐ Especiales  = FWC1 + FWC2
+// 🛡️ Escudos    = figurita nro 1 de cada país
+// 🥤 Coca Cola   = CC
+// ⚽ Jugadores  = todo lo demás
+function buildMissingSection() {
+  const cats = { especiales: [], escudos: [], cocacola: [], jugadoresByTeam: {} };
+  TEAMS.forEach(t => {
+    const nums = getStickers(t);
+    nums.filter(n => !(state[t.code] && (state[t.code][n] === true || state[t.code][n] === 2 || state[t.code][n] === 3))).forEach(n => {
+      const label = `${t.code} ${numLabel(n)}`;
+      if (t.code === 'FWC1' || t.code === 'FWC2') {
+        cats.especiales.push(label);
+      } else if (t.code === 'CC') {
+        cats.cocacola.push(label);
+      } else if (Number(n) === 1) {
+        cats.escudos.push(label);
+      } else {
+        if (!cats.jugadoresByTeam[t.code]) cats.jugadoresByTeam[t.code] = [];
+        cats.jugadoresByTeam[t.code].push(label);
+      }
+    });
+  });
+  const jugLines = Object.entries(cats.jugadoresByTeam).map(([code, arr]) => {
+    const team = TEAMS.find(t => t.code === code);
+    const emoji = team ? (team.emoji || EMOJI_MAP[code] || '') : '';
+    return `${emoji} *${code}:* ${arr.join(', ')}`;
+  }).join('\n');
+  const jugTotal = Object.values(cats.jugadoresByTeam).reduce((s, a) => s + a.length, 0);
+  const total = cats.especiales.length + cats.escudos.length + cats.cocacola.length + jugTotal;
+  return { cats, jugLines, jugTotal, total };
+}
+
+function buildWAMessage(type) {
+  const date = new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  let total = 0, owned = 0;
+  TEAMS.forEach(t => { total += t.total; owned += ownedCount(t.code); });
+  const pct = Math.round((owned/total)*100);
+  const rep = totalRepeated();
+
+  let msg = '';
+
+  if (type === 'faltantes' || type === 'ambas') {
+    msg += `⚽ *ÁLBUM MUNDIAL 2026 – ME FALTAN*\n📅 ${date}  |  📊 ${pct}% completo (${owned}/${total})\n🔁 Repetidas: ${rep}\n${'▬'.repeat(28)}\n`;
+    const { cats: mc, jugLines: mjl, jugTotal: mjt, total: mtotal } = buildMissingSection();
+    if (mtotal === 0) {
+      msg += '🎉 ¡ÁLBUM COMPLETO! No me falta nada.\n';
+    } else {
+      if (mc.especiales.length > 0) msg += `\n⭐ *Especiales:*\n${mc.especiales.join(' - ')}\n`;
+      if (mc.escudos.length > 0)   msg += `\n🛡️ *Escudos (nro 1):*\n${mc.escudos.join(' - ')}\n`;
+      if (mc.cocacola.length > 0)  msg += `\n🥤 *Coca Cola:*\n${mc.cocacola.join(' - ')}\n`;
+      if (mjt > 0)                 msg += `\n⚽ *Jugadores:*\n${mjl}\n`;
+    }
+  }
+
+  if (type === 'repetidas' || type === 'ambas') {
+    if (type === 'ambas') msg += `\n${'▬'.repeat(28)}\n`;
+    else msg += `🔁 *ÁLBUM MUNDIAL 2026 – MIS REPETIDAS*\n📅 ${date}  |  📊 ${pct}% completo (${owned}/${total})\n${'▬'.repeat(28)}\n`;
+    const { cats, jugLines, jugTotal, total: totalRep } = buildRepeatedSection();
+    if (totalRep === 0) {
+      msg += '✅ No tenés figuritas repetidas.\n';
+    } else {
+      msg += `🔁 *MIS REPETIDAS* (${totalRep} para intercambiar)\n`;
+      if (cats.especiales.length > 0) msg += `\n⭐ *Especiales:*\n${cats.especiales.join(' - ')}\n`;
+      if (cats.escudos.length > 0)   msg += `\n🛡️ *Escudos (nro 1):*\n${cats.escudos.join(' - ')}\n`;
+      if (cats.cocacola.length > 0)  msg += `\n🥤 *Coca Cola:*\n${cats.cocacola.join(' - ')}\n`;
+      if (jugTotal > 0)              msg += `\n⚽ *Jugadores:*\n${jugLines}\n`;
+    }
+  }
+
+  msg += `\n▬▬ Enviado desde Album Mundial 2026 📱`;
+  document.getElementById('waText').value = msg;
+}
+
+function openWA() {
+  currentWAType = 'faltantes';
+  document.getElementById('waModalTitle').textContent = '📤 Compartir por WhatsApp';
+  // Reset button styles
+  setWAType('faltantes');
+  document.getElementById('waTypeSelector').style.display = 'flex';
+  document.getElementById('waModal').classList.add('open');
+}
+function closeWA(e) {
+  if (e && e.target !== document.getElementById('waModal')) return;
+  document.getElementById('waModal').classList.remove('open');
+}
+function copyText() {
+  const txt = document.getElementById('waText').value;
+  navigator.clipboard.writeText(txt).then(() => {
+    const btn = document.querySelector('.btn-copy');
+    btn.textContent = '✅ Copiado';
+    setTimeout(() => btn.textContent = '📋 Copiar', 2000);
+  });
+}
+function sendWA() {
+  const txt = encodeURIComponent(document.getElementById('waText').value);
+  window.open(`https://wa.me/?text=${txt}`, '_blank');
+}
+document.getElementById('waModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('waModal')) closeWA();
+});
+
+// ── EXPORT PDF ──
+function exportPDF() {
+  const date = new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  let total = 0, owned = 0;
+  TEAMS.forEach(t => { total += t.total; owned += ownedCount(t.code); });
+  const pct = Math.round((owned/total)*100);
+  const repCount = totalRepeated();
+
+  const teams = TEAMS.map(t => {
+    const nums = getStickers(t);
+    const missing = nums.filter(n => !(state[t.code] && (state[t.code][n] === true || state[t.code][n] === 2 || state[t.code][n] === 3)));
+    return { ...t, missing };
+  }).filter(t => t.missing.length > 0);
+
+  // Same order as the page (TEAMS array), CC always last
+  const teamsOrder = TEAMS.map(t => t.code);
+  const sorted = [...teams].sort((a, b) => {
+    if (a.code === 'CC') return 1;
+    if (b.code === 'CC') return -1;
+    return teamsOrder.indexOf(a.code) - teamsOrder.indexOf(b.code);
+  });
+
+  // Build cards HTML (compact, 2-column grid)
+  let cardsHTML = '';
+  if (sorted.length === 0) {
+    cardsHTML = `<div style="grid-column:1/-1;text-align:center;padding:30px;font-size:16px;color:#16a34a;font-weight:700;">🎉 ¡Álbum completo! No te falta nada.</div>`;
+  } else {
+    sorted.forEach(t => {
+      const emoji = t.emoji || EMOJI_MAP[t.code] || '🏳️';
+      const _pdfFlagUrl = t.code === 'SCO' ? 'https://flagcdn.com/w20/gb-sct.png' : t.code === 'ENG' ? 'https://flagcdn.com/w20/gb-eng.png' : t.iso ? `https://flagcdn.com/w20/${t.iso.toLowerCase()}.png` : null;
+      const flagImg = t.code === 'FWC1'
+        ? `<span style="display:inline-flex;width:18px;height:13px;background:linear-gradient(135deg,#064e3b,#0f766e);border-radius:2px;align-items:center;justify-content:center;font-size:6px;font-weight:900;color:#f59e0b;vertical-align:middle;margin-right:4px;letter-spacing:0.5px;">FIFA</span>`
+        : t.code === 'FWC2'
+        ? `<span style="display:inline-flex;width:18px;height:13px;background:linear-gradient(135deg,#1e3a8a,#1d4ed8);border-radius:2px;align-items:center;justify-content:center;font-size:5px;font-weight:900;color:#f59e0b;vertical-align:middle;margin-right:4px;">FIFA</span>`
+        : _pdfFlagUrl
+        ? `<img src="${_pdfFlagUrl}" width="18" height="13" style="border-radius:2px;vertical-align:middle;margin-right:4px;" onerror="this.style.display='none'">`
+        : `<span style="font-size:13px;margin-right:3px;">${emoji}</span>`;
+      const nums = t.missing.map(n => numLabel(n)).join(' · ');
+      cardsHTML += `
+        <div style="border:1px solid #cbd5e1;border-radius:6px;overflow:hidden;break-inside:avoid;margin-bottom:5px;">
+          <div style="background:#f1f5f9;padding:4px 7px;display:flex;align-items:center;gap:4px;border-bottom:1px solid #cbd5e1;">
+            ${flagImg}
+            <span style="font-weight:800;font-size:10px;color:#1e293b;">${t.name}</span>
+            <span style="color:#94a3b8;font-size:9px;font-weight:600;">${t.code}</span>
+            <span style="margin-left:auto;background:#dc2626;color:#fff;font-size:9px;font-weight:800;border-radius:10px;padding:1px 5px;">−${t.missing.length}</span>
+          </div>
+          <div style="padding:4px 7px;font-size:9px;color:#334155;line-height:1.7;word-break:break-word;">${nums}</div>
+        </div>`;
+    });
+  }
+
+  // Build repeated cards
+  const repTeamsForPDF = TEAMS.map(t => {
+    const nums = getStickers(t);
+    const repeated = nums.filter(n => state[t.code] && (state[t.code][n] === 2 || state[t.code][n] === 3));
+    return { ...t, repeated };
+  }).filter(t => t.repeated.length > 0);
+
+  let repCardsHTML = '';
+  if (repTeamsForPDF.length > 0) {
+    repCardsHTML = '<div style="grid-column:1/-1;background:rgba(245,158,11,.1);border:1px solid #f59e0b;border-radius:6px;padding:5px 8px;margin-bottom:5px;font-size:10px;font-weight:800;color:#92400e;">🔁 MIS REPETIDAS – Para intercambiar</div>';
+    repTeamsForPDF.forEach(t => {
+      const emoji2 = t.emoji || EMOJI_MAP[t.code] || '🏳️';
+      const _pdfFlagUrl2 = t.code === 'SCO' ? 'https://flagcdn.com/w20/gb-sct.png' : t.code === 'ENG' ? 'https://flagcdn.com/w20/gb-eng.png' : t.iso ? `https://flagcdn.com/w20/${t.iso.toLowerCase()}.png` : null;
+      const flagImg2 = _pdfFlagUrl2
+        ? `<img src="${_pdfFlagUrl2}" width="18" height="13" style="border-radius:2px;vertical-align:middle;margin-right:4px;" onerror="this.style.display='none'">`
+        : `<span style="font-size:13px;margin-right:3px;">${emoji2}</span>`;
+      const nums2 = t.repeated.map(n => numLabel(n) + ' ×' + state[t.code][n]).join(' · ');
+      repCardsHTML += `<div style="border:1px solid #fde68a;border-radius:6px;overflow:hidden;break-inside:avoid;margin-bottom:5px;">
+        <div style="background:#fef3c7;padding:4px 7px;display:flex;align-items:center;gap:4px;border-bottom:1px solid #fde68a;">
+          ${flagImg2}
+          <span style="font-weight:800;font-size:10px;color:#1e293b;">${t.name}</span>
+          <span style="margin-left:auto;background:#f59e0b;color:#fff;font-size:9px;font-weight:800;border-radius:10px;padding:1px 5px;">×${t.repeated.length}</span>
+        </div>
+        <div style="padding:4px 7px;font-size:9px;color:#334155;line-height:1.7;word-break:break-word;">${nums2}</div>
+      </div>`;
+    });
+  }
+
+  const printWin = window.open('', '_blank', 'width=850,height=1000');
+  printWin.document.write(`<!DOCTYPE html><html><head>
+    <meta charset="UTF-8">
+    <title>Álbum Mundial 2026 – Faltantes</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: 'Segoe UI', system-ui, sans-serif; background: #fff; color: #111; }
+      @page { margin: 8mm; size: A4; }
+      @media print {
+        body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .no-print { display: none !important; }
+      }
+      .header-box {
+        background: linear-gradient(135deg,#064e3b,#0f766e);
+        color: #fff; border-radius: 8px; padding: 10px 14px;
+        margin-bottom: 8px; display: flex; align-items: center; gap: 14px;
+      }
+      .header-title { font-size: 14px; font-weight: 900; }
+      .header-sub { font-size: 10px; opacity: .85; margin-top: 2px; }
+      .progress-bar-bg { background: rgba(255,255,255,.2); border-radius: 99px; height: 6px; margin-top: 6px; width: 180px; overflow: hidden; }
+      .progress-bar-fill { height: 100%; background: linear-gradient(90deg,#10b981,#f59e0b); border-radius: 99px; }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+        align-items: start;
+      }
+      .footer { text-align: center; margin-top: 8px; font-size: 8px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 6px; }
+      .print-btn {
+        display: block; margin: 10px auto; padding: 10px 28px;
+        background: #064e3b; color: #fff; border: none; border-radius: 8px;
+        font-size: 14px; font-weight: 700; cursor: pointer;
+      }
+    </style>
+  </head><body>
+    <button class="print-btn no-print" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+    <div class="header-box">
+      <div>
+        <div style="font-size:22px;">⚽</div>
+      </div>
+      <div style="flex:1;">
+        <div class="header-title">ÁLBUM MUNDIAL 2026 – ME FALTAN</div>
+        <div class="header-sub">📅 ${date} &nbsp;·&nbsp; 📊 ${pct}% completo &nbsp;·&nbsp; Tengo ${owned} / ${total} &nbsp;·&nbsp; 🔁 ${repCount} repetidas</div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:26px;font-weight:900;color:#f59e0b;">${pct}%</div>
+        <div style="font-size:9px;opacity:.7;">completado</div>
+      </div>
+    </div>
+    <div class="grid">${cardsHTML}</div>
+    <div class="grid" id="repGrid" style="margin-top:8px;">${repCardsHTML}</div>
+    <div class="footer">Generado desde Álbum Mundial 2026 📱 · ${date}</div>
+  </body></html>`);
+  printWin.document.close();
+  printWin.focus();
+  setTimeout(() => { printWin.print(); }, 500);
+}
+
+// ── REPEATED PANEL ──
+function buildRepeatedPanel() {
+  const container = document.getElementById('repeatedList');
+  const teams = TEAMS.map(t => {
+    const nums = getStickers(t);
+    const repeated = nums.filter(n => state[t.code] && (state[t.code][n] === 2 || state[t.code][n] === 3));
+    return { ...t, repeated, repDetails: nums.filter(n => state[t.code] && (state[t.code][n] === 2 || state[t.code][n] === 3)).map(n => ({ n, cnt: state[t.code][n] })) };
+  }).filter(t => t.repeated.length > 0).sort((a, b) => b.repeated.length - a.repeated.length);
+
+  // ── Fila 1: Escudos repetidos (nro 1 de cada equipo, excluyendo FWC1/FWC2/CC) ──
+  const escudosRep = [];
+  TEAMS.forEach(t => {
+    if (t.code === 'FWC1' || t.code === 'FWC2' || t.code === 'CC') return;
+    const sticker1 = getStickers(t)[0];
+    if (state[t.code] && (state[t.code][sticker1] === 2 || state[t.code][sticker1] === 3)) {
+      const cnt = state[t.code][sticker1];
+      escudosRep.push({ code: t.code, n: sticker1, cnt });
+    }
+  });
+
+  // ── Fila 2: Equipos repetidos (nro 13 de cada equipo) ──
+  const equiposRepByTeam = {};
+  TEAMS.forEach(t => {
+    if (t.code === 'FWC1' || t.code === 'FWC2' || t.code === 'CC') return;
+    const n13 = getStickers(t).find(n => n === 13);
+    if (n13 === undefined) return;
+    if (state[t.code] && (state[t.code][n13] === 2 || state[t.code][n13] === 3)) {
+      equiposRepByTeam[t.code] = { t, rep: [{ n: n13, cnt: state[t.code][n13] }] };
+    }
+  });
+  const equiposRepTotal = Object.values(equiposRepByTeam).reduce((s, v) => s + v.rep.length, 0);
+
+  // ── Fila 3: FWC repetidas (FWC1 + FWC2) ──
+  const fwcRep = [];
+  ['FWC1','FWC2'].forEach(code => {
+    const t = TEAMS.find(x => x.code === code);
+    if (!t) return;
+    getStickers(t).forEach(n => {
+      if (state[t.code] && (state[t.code][n] === 2 || state[t.code][n] === 3)) {
+        fwcRep.push({ code, n, cnt: state[t.code][n] });
+      }
+    });
+  });
+
+  // Build summary rows HTML
+  const repNumStyle = (cnt) => `background:rgba(245,158,11,.15);border-color:${cnt===3?'#f97316':'var(--gold)'};color:${cnt===3?'#f97316':'var(--gold)'};font-weight:800;`;
+
+  let summaryHTML = '';
+
+  // Row 1 – Escudos repetidos
+  summaryHTML += `<div class="missing-team-block">
+    <div class="missing-team-head">
+      <span style="font-size:20px;">🛡️</span>
+      <span class="missing-team-nm">Escudos repetidos</span>
+      <span class="missing-badge" style="background:var(--gold);color:#1a1a1a;">×${escudosRep.length}</span>
+    </div>
+    <div class="missing-nums">${escudosRep.length === 0
+      ? '<span style="font-size:12px;color:var(--text2);">Sin escudos repetidos</span>'
+      : escudosRep.map(({code,n,cnt}) => `<span class="missing-num" style="${repNumStyle(cnt)}">${code} ${numLabel(n)} <span style="font-size:9px">x${cnt}</span></span>`).join('')}
+    </div>
+  </div>`;
+
+  // Row 2 – Equipos repetidos
+  const equiposRepNums = Object.values(equiposRepByTeam).map(({ t, rep }) =>
+    rep.map(({n, cnt}) => `<span class="missing-num" style="${repNumStyle(cnt)}" title="${t.name}">${t.code} ${numLabel(n)} <span style="font-size:9px">x${cnt}</span></span>`).join('')
+  ).join('');
+  summaryHTML += `<div class="missing-team-block">
+    <div class="missing-team-head">
+      <span style="font-size:20px;">⚽</span>
+      <span class="missing-team-nm">Equipos nro 13 repetidos</span>
+      <span class="missing-badge" style="background:var(--gold);color:#1a1a1a;">×${equiposRepTotal}</span>
+    </div>
+    <div class="missing-nums">${equiposRepTotal === 0
+      ? '<span style="font-size:12px;color:var(--text2);">Sin nro 13 repetidos</span>'
+      : equiposRepNums}
+    </div>
+  </div>`;
+
+  // Row 3 – FWC repetidas
+  summaryHTML += `<div class="missing-team-block">
+    <div class="missing-team-head">
+      <span style="font-size:20px;">🏆</span>
+      <span class="missing-team-nm">FWC repetidas</span>
+      <span class="missing-badge" style="background:var(--gold);color:#1a1a1a;">×${fwcRep.length}</span>
+    </div>
+    <div class="missing-nums">${fwcRep.length === 0
+      ? '<span style="font-size:12px;color:var(--text2);">Sin FWC repetidas</span>'
+      : fwcRep.map(({code,n,cnt}) => `<span class="missing-num" style="${repNumStyle(cnt)}">${code} ${numLabel(n)} <span style="font-size:9px">x${cnt}</span></span>`).join('')}
+    </div>
+  </div>`;
+
+  // Separator
+  summaryHTML += `<div style="height:1px;background:var(--border);margin:6px 0 10px;"></div>`;
+
+  // In the per-team list below: exclude FWC1/FWC2/CC (shown in summary rows above),
+  // and exclude nro 1 (escudos) and nro 13 (equipos) from each team (also in summary rows).
+  const teamsBelow = teams
+    .filter(t => t.code !== 'FWC1' && t.code !== 'FWC2' && t.code !== 'CC')
+    .map(t => {
+      const repFiltered = t.repDetails.filter(({ n }) => n !== 1 && n !== 13);
+      return { ...t, repFiltered };
+    })
+    .filter(t => t.repFiltered.length > 0);
+
+  if (teamsBelow.length === 0 && teams.length === 0) {
+    container.innerHTML = summaryHTML + `<div class="all-done-msg"><div class="emoji">✅</div><div class="txt" style="color:var(--gold)">No tenés repetidas</div><p style="color:var(--text2);font-size:13px;margin-top:8px">Hacé doble toque en una figurita para marcarla como repetida</p></div>`;
+    return;
+  }
+
+  container.innerHTML = summaryHTML + teamsBelow.map(t => {
+    const flag = getFlagImg(t, 'sm');
+    const nums = t.repFiltered.map(({ n, cnt }) => `<span class="missing-num" style="background:rgba(245,158,11,.15);border-color:${cnt===3?'#f97316':'var(--gold)'};color:${cnt===3?'#f97316':'var(--gold)'};font-weight:800;">${numLabel(n)} <span style="font-size:9px">x${cnt}</span></span>`).join('');
+    return `<div class="missing-team-block">
+      <div class="missing-team-head">
+        ${flag}
+        <span class="missing-team-nm">${t.name} <span style="color:var(--text2);font-weight:500;font-size:11px">${t.code}</span></span>
+        <span class="missing-badge" style="background:var(--gold);color:#1a1a1a;">×${t.repFiltered.length}</span>
+      </div>
+      <div class="missing-nums">${nums}</div>
+    </div>`;
+  }).join('');
+}
+
+function openWA_repeated() {
+  currentWAType = 'repetidas';
+  document.getElementById('waModalTitle').textContent = '📤 Compartir repetidas';
+  setWAType('repetidas');
+  document.getElementById('waTypeSelector').style.display = 'flex';
+  document.getElementById('waModal').classList.add('open');
+}
+
+// ── GOOGLE DRIVE MODAL ──
+function openDriveModal() {
+  document.getElementById('driveModal').classList.add('open');
+}
+function closeDriveModal() {
+  document.getElementById('driveModal').classList.remove('open');
+}
+document.getElementById('driveModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('driveModal')) closeDriveModal();
+});
+
+function downloadForDrive() {
+  // Embed current state into a self-contained HTML snapshot
+  const stateJSON = JSON.stringify(state);
+
+  // Read current page HTML and inject state (Chrome-compatible approach)
+  const originalHTML = document.documentElement.outerHTML;
+
+  // Use a unique marker comment to inject embedded state - works in all browsers
+  const MARKER = '/* __EMBEDDED_STATE_PLACEHOLDER__ */';
+  let injectedHTML;
+  
+  if (originalHTML.includes(MARKER)) {
+    // Already has a placeholder, replace it
+    injectedHTML = originalHTML.replace(
+      /\/\* __EMBEDDED_STATE_PLACEHOLDER__ \*\/[\s\S]*?\/\* __END_EMBEDDED_STATE__ \*\//,
+      `/* __EMBEDDED_STATE_PLACEHOLDER__ */
+const __embeddedState__ = ${stateJSON};
+try { Object.assign(state, __embeddedState__); } catch(e) {}
+/* __END_EMBEDDED_STATE__ */`
+    );
+  } else {
+    // Inject before the loadState call
+    injectedHTML = originalHTML.replace(
+      'loadState();',
+      `/* __EMBEDDED_STATE_PLACEHOLDER__ */
+const __embeddedState__ = ${stateJSON};
+try {
+  const local = localStorage.getItem('mundial2026app');
+  const localState = local ? JSON.parse(local) : {};
+  // Merge embedded + local (local wins)
+  state = Object.assign({}, __embeddedState__, localState);
+  TEAMS.forEach(t => { if (!state[t.code]) state[t.code] = {}; });
+  try { localStorage.setItem('mundial2026app', JSON.stringify(state)); } catch(e2) {}
+} catch(e) {
+  state = ${stateJSON};
+  TEAMS.forEach(t => { if (!state[t.code]) state[t.code] = {}; });
+}
+/* __END_EMBEDDED_STATE__ */
+// loadState(); // skipped - using embedded state above`
+    );
+  }
+
+  const blob = new Blob([injectedHTML], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const dateStr = new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'}).replace(/\//g,'-');
+  a.href = url;
+  a.download = `Album_Mundial2026_${dateStr}.html`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  // Show success feedback
+  const btn = document.querySelector('.btn-drive-download');
+  btn.textContent = '✅ ¡Descargado!';
+  setTimeout(() => {
+    btn.textContent = '⬇️ Descargar álbum';
+    closeDriveModal();
+  }, 2000);
+}
+
+// ── SAVE / LOAD DATA ──
+function openSaveLoadModal() {
+  document.getElementById('importStatus').textContent = '';
+  document.getElementById('importFile').value = '';
+  document.getElementById('importLabel').style.borderColor = '';
+  document.getElementById('saveLoadModal').classList.add('open');
+}
+function closeSaveLoadModal(e) {
+  if (e.target === document.getElementById('saveLoadModal')) document.getElementById('saveLoadModal').classList.remove('open');
+}
+
+function exportJSON() {
+  const data = { version: 1, date: new Date().toISOString(), state };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const dateStr = new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'}).replace(/\//g,'-');
+  a.href = url;
+  a.download = `Album_Mundial2026_${dateStr}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  const btn = event.currentTarget;
+  btn.textContent = '✅ ¡Descargado!';
+  setTimeout(() => { btn.textContent = '📥 Descargar JSON con mi progreso'; }, 2000);
+}
+
+function importJSON(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const status = document.getElementById('importStatus');
+  const label = document.getElementById('importLabel');
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      const importedState = parsed.state || parsed;
+      // Validate: must have at least some team codes
+      const validCodes = TEAMS.map(t => t.code);
+      const hasValidData = Object.keys(importedState).some(k => validCodes.includes(k));
+      if (!hasValidData) throw new Error('Archivo inválido');
+      // Merge: imported data wins
+      TEAMS.forEach(t => {
+        if (importedState[t.code]) {
+          state[t.code] = importedState[t.code];
+        }
+      });
+      saveState();
+      buildTeamList();
+      updateGlobal();
+      status.textContent = '✅ ¡Datos cargados correctamente!';
+      status.style.color = 'var(--green)';
+      label.style.borderColor = 'var(--green)';
+      setTimeout(() => {
+        document.getElementById('saveLoadModal').classList.remove('open');
+      }, 1500);
+    } catch(err) {
+      status.textContent = '❌ Archivo inválido. Verificá que sea un JSON del álbum.';
+      status.style.color = 'var(--red)';
+      label.style.borderColor = 'var(--red)';
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ── CLOUD SYNC (Google Apps Script) ──
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwkswO_X8ljqGTIPzttuGuBogHVqUdxuPspb9SkvkCyUW5TRIo77ZItZkxatmRqY6_mug/exec';
+
+function getSyncPin() { return localStorage.getItem('mundial2026_pin') || ''; }
+function setSyncPin(p) { localStorage.setItem('mundial2026_pin', p.trim().toUpperCase()); }
+function clearSyncPin() { localStorage.removeItem('mundial2026_pin'); }
+function getSyncAuto() { return localStorage.getItem('mundial2026_syncauto') === '1'; }
+function setSyncAuto(v) { localStorage.setItem('mundial2026_syncauto', v ? '1' : '0'); }
+
+async function cloudUpload(pin) {
+  pin = pin.trim().toUpperCase();
+  const data = { version: 1, date: new Date().toISOString(), pin, state };
+  try {
+    const r = await fetch(`${GAS_URL}?pin=${pin}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(data)
+    });
+    const txt = await r.text();
+    const j = JSON.parse(txt);
+    if (!j.ok) throw new Error('Respuesta inválida');
+    return { ok: true };
+  } catch(e) { return { ok: false, err: e.message }; }
+}
+
+async function cloudDownloadByPin(pin) {
+  pin = pin.trim().toUpperCase();
+  try {
+    const r = await fetch(`${GAS_URL}?pin=${pin}`);
+    const txt = await r.text();
+    const data = JSON.parse(txt);
+    if (!data || !data.state) {
+      return { ok: false, err: 'PIN no encontrado. ¿Subiste los datos desde tu PC primero?' };
+    }
+    return { ok: true, data };
+  } catch(e) { return { ok: false, err: e.message }; }
+}
+
+function openSyncModal() {
+  renderSyncModal();
+  document.getElementById('syncModal').classList.add('open');
+}
+function closeSyncModal() {
+  document.getElementById('syncModal').classList.remove('open');
+}
+document.getElementById('syncModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('syncModal')) closeSyncModal();
+});
+
+function renderSyncModal() {
+  const pin = getSyncPin();
+  const autoOn = getSyncAuto();
+  const body = document.getElementById('syncModalBody');
+
+  if (pin) {
+    body.innerHTML = `
+      <div class="sync-connected-bar">
+        <span>🔐 PIN activo:</span>
+        <span style="font-size:18px;font-weight:900;letter-spacing:4px;color:#fff;">${pin}</span>
+        <button class="sync-disconnect-btn" onclick="disconnectPin()">Cambiar</button>
+      </div>
+      <div class="sync-info-box">
+        <strong>Desde cualquier dispositivo:</strong><br>
+        1. Abrí la app → botón <b>☁️ ${pin}</b><br>
+        2. Si es nuevo, ingresá tu PIN → <b>"Bajar de la nube"</b><br>
+        3. ¡Tu progreso aparece al instante! 🎉
+      </div>
+      <div class="sync-auto-row">
+        <div>
+          <div style="font-size:13px;font-weight:700;">Guardar automático ☁️</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:2px;">Sube a la nube cada vez que tocás una figurita</div>
+        </div>
+        <div class="sync-toggle ${autoOn ? 'on' : ''}" id="autoToggle" onclick="toggleSyncAuto()"></div>
+      </div>
+      <div class="sync-btn-row">
+        <button class="sync-btn sync-btn-upload" onclick="doUpload()">⬆️ Subir datos</button>
+        <button class="sync-btn sync-btn-download" onclick="doDownload()">⬇️ Bajar de la nube</button>
+      </div>
+      <div class="sync-status" id="syncStatus"></div>
+      <button onclick="closeSyncModal()" style="width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:12px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px;">Cerrar</button>
+    `;
+  } else {
+    body.innerHTML = `
+      <div class="sync-info-box">
+        <strong>¿Cómo funciona?</strong><br>
+        Elegí un PIN secreto (ej: <b>TOMY</b> o <b>1234</b>). Con ese PIN podés guardar tu progreso en internet y acceder desde cualquier dispositivo. 🔐
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px;">Tu PIN secreto (4–8 caracteres)</div>
+        <input class="sync-pin-input" id="pinInput" type="text" maxlength="8"
+          placeholder="Ej: TOMY o 1234" autocomplete="off"
+          oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')"
+          onkeydown="if(event.key==='Enter') activatePin()">
+        <div style="font-size:11px;color:var(--text2);text-align:center;margin-top:6px;">Solo letras y números. Guardalo bien.</div>
+      </div>
+      <div class="sync-status" id="syncStatus"></div>
+      <button class="sync-btn sync-btn-upload" onclick="activatePin()" style="width:100%;">🆕 Crear PIN y subir mis datos</button>
+      <div style="text-align:center;color:var(--text2);font-size:12px;padding:4px 0;">— ya tenés un PIN —</div>
+      <button class="sync-btn sync-btn-download" onclick="activatePinDownload()" style="width:100%;">⬇️ Ingresar PIN y bajar mis datos</button>
+    `;
+    setTimeout(() => { const i = document.getElementById('pinInput'); if (i) i.focus(); }, 300);
+  }
+}
+
+async function activatePin() {
+  const pin = (document.getElementById('pinInput')?.value || '').trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
+  const status = document.getElementById('syncStatus');
+  if (pin.length < 4) { status.textContent = '❌ El PIN debe tener al menos 4 caracteres'; status.style.color = 'var(--red)'; return; }
+  status.textContent = '⏳ Creando tu espacio en la nube…'; status.style.color = 'var(--text2)';
+  const btn = document.querySelector('#syncModalBody .sync-btn-upload');
+  if (btn) btn.disabled = true;
+  const res = await cloudUpload(pin);
+  if (btn) btn.disabled = false;
+  if (res.ok) {
+    setSyncPin(pin);
+    status.textContent = '✅ ¡PIN activado! Datos guardados en la nube.'; status.style.color = 'var(--green)';
+    updateCloudBtn();
+    setTimeout(() => renderSyncModal(), 1400);
+  } else {
+    status.textContent = '❌ Error: ' + res.err; status.style.color = 'var(--red)';
+  }
+}
+
+async function activatePinDownload() {
+  const pin = (document.getElementById('pinInput')?.value || '').trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
+  const status = document.getElementById('syncStatus');
+  if (pin.length < 4) { status.textContent = '❌ El PIN debe tener al menos 4 caracteres'; status.style.color = 'var(--red)'; return; }
+  status.textContent = '⏳ Buscando tus datos en la nube…'; status.style.color = 'var(--text2)';
+  const btn = document.querySelector('#syncModalBody .sync-btn-download');
+  if (btn) btn.disabled = true;
+  const res = await cloudDownloadByPin(pin);
+  if (btn) btn.disabled = false;
+  if (res.ok) {
+    const importedState = res.data.state;
+    TEAMS.forEach(t => { if (importedState[t.code]) state[t.code] = importedState[t.code]; });
+    saveState(); buildTeamList(); updateGlobal();
+    setSyncPin(pin);
+    status.textContent = '✅ ¡Datos cargados desde la nube!'; status.style.color = 'var(--green)';
+    updateCloudBtn();
+    setTimeout(() => renderSyncModal(), 1400);
+  } else {
+    status.textContent = '❌ ' + res.err; status.style.color = 'var(--red)';
+  }
+}
+
+async function doUpload() {
+  const pin = getSyncPin();
+  const status = document.getElementById('syncStatus');
+  const btns = document.querySelectorAll('#syncModalBody .sync-btn');
+  btns.forEach(b => b.disabled = true);
+  status.textContent = '⏳ Subiendo a la nube…'; status.style.color = 'var(--text2)';
+  const res = await cloudUpload(pin);
+  btns.forEach(b => b.disabled = false);
+  if (res.ok) {
+    status.textContent = '✅ Subido · ' + new Date().toLocaleTimeString('es-AR');
+    status.style.color = 'var(--green)';
+  } else {
+    status.textContent = '❌ Error: ' + res.err; status.style.color = 'var(--red)';
+  }
+}
+
+async function doDownload() {
+  const pin = getSyncPin();
+  const status = document.getElementById('syncStatus');
+  const btns = document.querySelectorAll('#syncModalBody .sync-btn');
+  btns.forEach(b => b.disabled = true);
+  status.textContent = '⏳ Bajando de la nube…'; status.style.color = 'var(--text2)';
+  const res = await cloudDownloadByPin(pin);
+  btns.forEach(b => b.disabled = false);
+  if (res.ok) {
+    const importedState = res.data.state;
+    TEAMS.forEach(t => { if (importedState[t.code]) state[t.code] = importedState[t.code]; });
+    saveState(); buildTeamList(); updateGlobal();
+    status.textContent = '✅ ¡Datos cargados! · ' + new Date().toLocaleTimeString('es-AR');
+    status.style.color = 'var(--green)';
+  } else {
+    status.textContent = '❌ ' + res.err; status.style.color = 'var(--red)';
+  }
+}
+
+function disconnectPin() {
+  if (confirm('¿Querés cambiar de PIN? Tu progreso local no se borra.')) {
+    clearSyncPin();
+    renderSyncModal();
+    updateCloudBtn();
+  }
+}
+
+function toggleSyncAuto() {
+  const newVal = !getSyncAuto();
+  setSyncAuto(newVal);
+  const tog = document.getElementById('autoToggle');
+  if (tog) tog.classList.toggle('on', newVal);
+}
+
+function updateCloudBtn() {
+  const btn = document.getElementById('cloudBtn');
+  if (!btn) return;
+  const pin = getSyncPin();
+  if (pin) {
+    btn.textContent = '☁️ ' + pin;
+    btn.style.background = 'rgba(16,185,129,.25)';
+    btn.style.borderColor = 'rgba(16,185,129,.6)';
+    btn.style.color = '#10b981';
+  } else {
+    btn.textContent = '☁️ Nube';
+    btn.style.background = 'rgba(34,211,238,.2)';
+    btn.style.borderColor = 'rgba(34,211,238,.4)';
+    btn.style.color = '#22d3ee';
+  }
+}
+
+// ── RESET ──
+function confirmReset() {
+  if (confirm('¿Seguro que querés borrar todo el progreso?')) {
+    TEAMS.forEach(t => { state[t.code] = {}; });
+    saveState();
+    buildTeamList();
+    updateGlobal();
+    if (document.getElementById('panel-missing').classList.contains('active')) buildMissingPanel();
+  }
+}
+
+// ── AUTO CLOUD SYNC (cada 1 minuto) ──
+let autoCloudTimer = null;
+
+function startAutoCloudSync() {
+  if (autoCloudTimer) clearInterval(autoCloudTimer);
+  autoCloudTimer = setInterval(async () => {
+    const pin = getSyncPin ? getSyncPin() : null;
+    if (!pin) return;
+    let totalOwned = 0;
+    TEAMS.forEach(t => { totalOwned += ownedCount(t.code); });
+    if (totalOwned === 0) return;
+    try {
+      await cloudUpload(pin);
+      const badge = document.getElementById('saveBadge');
+      if (badge) {
+        badge.classList.add('saving');
+        badge.textContent = '☁️ Sincronizado';
+        setTimeout(() => {
+          badge.classList.remove('saving');
+          badge.textContent = 'Guardado ✓';
+        }, 2000);
+      }
+    } catch(e) {}
+  }, 300000); // cada 5 minutos
+}
+
+// ── PROGRESS TRACKING ──
+const PROGRESS_KEY = 'mundial2026_progress';
+
+function getTotalOwned() {
+  let total = 0;
+  TEAMS.forEach(t => { total += ownedCount(t.code); });
+  return total;
+}
+
+function saveProgressSnapshot() {
+  const today = new Date().toISOString().slice(0, 10);
+  let history = {};
+  try { history = JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}'); } catch(e) {}
+  const owned = getTotalOwned();
+  // Always update today's value (may have added more stickers today)
+  history[today] = owned;
+  try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(history)); } catch(e) {}
+}
+
+function getProgressHistory() {
+  try { return JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}'); } catch(e) { return {}; }
+}
+
+function buildProgressPanel() {
+  const history = getProgressHistory();
+  const wrap = document.getElementById('progressChartWrap');
+  const noData = document.getElementById('progressNoData');
+  const statCards = document.getElementById('progressStatCards');
+
+  const keys = Object.keys(history).sort();
+
+  if (keys.length === 0) {
+    wrap.innerHTML = '';
+    noData.style.display = 'block';
+    statCards.innerHTML = '';
+    return;
+  }
+  noData.style.display = 'none';
+
+  const values = keys.map(k => history[k]);
+  const totalStickers = TEAMS.reduce((s, t) => s + t.total, 0);
+  const maxVal = Math.max(...values, 1);
+  const minVal = Math.min(...values);
+  const latest = values[values.length - 1];
+  const first = values[0];
+
+  // Daily gains
+  const gains = values.map((v, i) => i === 0 ? v : v - values[i - 1]);
+  const maxGain = Math.max(...gains, 1);
+  const bestDayIdx = gains.indexOf(Math.max(...gains));
+  const avgGain = keys.length > 1 ? Math.round((latest - first) / (keys.length - 1)) : latest;
+
+  // ── SVG Chart ──
+  const W = Math.min(wrap.clientWidth || 340, 500);
+  const H = 105;
+  const PAD = { top: 10, right: 16, bottom: 34, left: 36 };
+  const chartW = W - PAD.left - PAD.right;
+  const chartH = H - PAD.top - PAD.bottom;
+  const n = keys.length;
+
+  function xPos(i) { return PAD.left + (n === 1 ? chartW / 2 : (i / (n - 1)) * chartW); }
+  function yPos(v) { return PAD.top + chartH - ((v / totalStickers) * chartH); }
+
+  // Grid lines (every 25%)
+  let gridLines = '';
+  [0, 25, 50, 75, 100].forEach(pct => {
+    const v = Math.round((pct / 100) * totalStickers);
+    const y = yPos(v);
+    gridLines += `<line x1="${PAD.left}" y1="${y}" x2="${W - PAD.right}" y2="${y}" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>`;
+    gridLines += `<text x="${PAD.left - 6}" y="${y + 4}" fill="#64748b" font-size="9" text-anchor="end">${pct}%</text>`;
+  });
+
+  // Area fill path
+  let areaPath = `M${xPos(0)},${yPos(values[0])}`;
+  for (let i = 1; i < n; i++) areaPath += ` L${xPos(i)},${yPos(values[i])}`;
+  areaPath += ` L${xPos(n-1)},${PAD.top + chartH} L${xPos(0)},${PAD.top + chartH} Z`;
+
+  // Line path
+  let linePath = `M${xPos(0)},${yPos(values[0])}`;
+  for (let i = 1; i < n; i++) linePath += ` L${xPos(i)},${yPos(values[i])}`;
+
+  // X labels — show max 6 evenly
+  let xLabels = '';
+  const step = Math.max(1, Math.floor(n / 6));
+  for (let i = 0; i < n; i++) {
+    if (i === 0 || i === n - 1 || i % step === 0) {
+      const d = keys[i].slice(5); // MM-DD
+      xLabels += `<text x="${xPos(i)}" y="${H - 6}" fill="#64748b" font-size="9" text-anchor="middle">${d}</text>`;
+    }
+  }
+
+  // Data points + tooltip areas
+  let dots = '';
+  let tooltipRects = '';
+  values.forEach((v, i) => {
+    const cx = xPos(i);
+    const cy = yPos(v);
+    const gain = gains[i];
+    const isBest = i === bestDayIdx && gain > 0;
+    dots += `<circle cx="${cx}" cy="${cy}" r="${isBest ? 5 : 3.5}" fill="${isBest ? '#f59e0b' : '#22d3ee'}" stroke="${isBest ? '#92400e' : '#0e7490'}" stroke-width="1.5"/>`;
+    // Hover tooltip box
+    const tipX = Math.min(cx - 28, W - PAD.right - 60);
+    const tipY = cy - 38;
+    const gainTxt = gain > 0 ? `+${gain}` : `${gain}`;
+    tooltipRects += `
+      <g class="prog-tip" style="opacity:0;transition:opacity .15s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0" ontouchstart="showProgTip(this)" ontouchend="hideProgTip(this)">
+        <rect x="${Math.max(PAD.left, tipX)}" y="${Math.max(PAD.top, tipY)}" width="58" height="28" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+        <text x="${Math.max(PAD.left, tipX) + 29}" y="${Math.max(PAD.top, tipY) + 11}" fill="#f1f5f9" font-size="9" text-anchor="middle" font-weight="700">${v} fig.</text>
+        <text x="${Math.max(PAD.left, tipX) + 29}" y="${Math.max(PAD.top, tipY) + 22}" fill="${gain >= 0 ? '#10b981' : '#ef4444'}" font-size="9" text-anchor="middle">${gainTxt} hoy</text>
+        <rect x="${cx - 10}" y="${cy - 10}" width="20" height="20" fill="transparent"/>
+      </g>`;
+  });
+
+  wrap.innerHTML = `
+    <svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;overflow:visible;">
+      <defs>
+        <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.02"/>
+        </linearGradient>
+        <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#10b981"/>
+          <stop offset="100%" stop-color="#22d3ee"/>
+        </linearGradient>
+      </defs>
+      ${gridLines}
+      <path d="${areaPath}" fill="url(#areaGrad)"/>
+      <path d="${linePath}" fill="none" stroke="url(#lineGrad)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      ${dots}
+      ${tooltipRects}
+      ${xLabels}
+    </svg>
+    <div style="text-align:center;font-size:10px;color:#475569;margin-top:4px;">🟡 Mejor día &nbsp;·&nbsp; 🔵 Día normal</div>`;
+
+  // ── Stat cards ──
+  const pct = Math.round((latest / totalStickers) * 100);
+  const daysActive = keys.length;
+  statCards.innerHTML = `
+    <div class="stats-card green">
+      <div class="stats-card-num">${latest}</div>
+      <div class="stats-card-lbl">Figuritas hoy</div>
+    </div>
+    <div class="stats-card blue">
+      <div class="stats-card-num">${pct}%</div>
+      <div class="stats-card-lbl">Completado</div>
+    </div>
+    <div class="stats-card gold">
+      <div class="stats-card-num">+${Math.max(...gains)}</div>
+      <div class="stats-card-lbl">Mejor día</div>
+    </div>
+    <div class="stats-card" style="background:var(--surface);border:1px solid var(--border);">
+      <div class="stats-card-num" style="color:var(--accent);">${avgGain}</div>
+      <div class="stats-card-lbl">Promedio/día</div>
+    </div>
+    <div class="stats-card" style="background:var(--surface);border:1px solid var(--border);grid-column:1/-1;">
+      <div class="stats-card-num" style="color:var(--text2);font-size:20px;">${daysActive} día${daysActive !== 1 ? 's' : ''}</div>
+      <div class="stats-card-lbl">Días usando el álbum</div>
+    </div>`;
+}
+
+function showProgTip(el) { el.style.opacity = 1; }
+function hideProgTip(el) { setTimeout(() => { el.style.opacity = 0; }, 1500); }
+
+// ── CONFETTI (papelitos al entrar) ──
+function launchConfetti() {
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:100000;';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const colors = ['#f59e0b','#10b981','#22d3ee','#ef4444','#a78bfa','#fb7185','#34d399','#60a5fa'];
+  const pieces = Array.from({length: 120}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * -canvas.height,
+    w: Math.random() * 10 + 5,
+    h: Math.random() * 6 + 3,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    rot: Math.random() * 360,
+    vx: (Math.random() - 0.5) * 2,
+    vy: Math.random() * 3 + 2,
+    vr: (Math.random() - 0.5) * 6
+  }));
+
+  let frame = 0;
+  const maxFrames = 180;
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = frame < maxFrames ? Math.min(1, (maxFrames - frame) / 60) : 0;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.vr;
+      p.vy += 0.05;
+    });
+    frame++;
+    if (frame < maxFrames + 30) requestAnimationFrame(draw);
+    else document.body.removeChild(canvas);
+  }
+  draw();
+}
+
+// ── TEAM COMPLETION TOAST ──
+let prevCompleted = {};
+function checkTeamCompletion(code) {
+  const team = TEAMS.find(t => t.code === code);
+  if (!team) return;
+  const owned = ownedCount(code);
+  const wasComplete = prevCompleted[code];
+  const isNowComplete = owned === team.total;
+  if (!wasComplete && isNowComplete) {
+    prevCompleted[code] = true;
+    showTeamToast(team);
+  } else if (!isNowComplete) {
+    prevCompleted[code] = false;
+  }
+}
+
+function showTeamToast(team) {
+  const existing = document.getElementById('teamCompleteToast');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.id = 'teamCompleteToast';
+  toast.style.cssText = `
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.7);
+    background: linear-gradient(135deg, #064e3b, #0f766e);
+    border: 2px solid #10b981; border-radius: 20px;
+    padding: 24px 28px; text-align: center; z-index: 99997;
+    box-shadow: 0 20px 60px rgba(0,0,0,.7);
+    opacity: 0; transition: all 0.35s cubic-bezier(.34,1.56,.64,1);
+    max-width: 300px; width: 85%;
+  `;
+  const flag = team.emoji || '🏆';
+  toast.innerHTML = `
+    <div style="font-size:52px;margin-bottom:10px;">${flag}</div>
+    <div style="font-size:22px;font-weight:900;color:#f59e0b;line-height:1.2;">🎉 ¡Genio!</div>
+    <div style="font-size:15px;font-weight:700;color:#fff;margin-top:6px;">¡Completaste<br><span style="color:#10b981;">${team.name}</span>!</div>
+    <div style="font-size:28px;margin-top:10px;">⚽🏆⚽</div>
+  `;
+  document.body.appendChild(toast);
+  requestAnimationFrame(() => {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translate(-50%,-50%) scale(1)';
+  });
+  // Vibrar
+  if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 200]);
+  // Lanzar confetti
+  launchConfetti();
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translate(-50%,-50%) scale(0.8)';
+    setTimeout(() => { if (toast.parentNode) toast.remove(); }, 400);
+  }, 3200);
+}
+
+
+
+// ── CÁMARA + OCR ──
+function abrirCamara() {
+  document.getElementById('cameraInput').click();
+}
+
+function cerrarFoto() {
+  document.getElementById('photoPreviewWrap').style.display = 'none';
+  document.getElementById('cameraInput').value = '';
+}
+
+async function procesarFoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  // Show preview
+  const previewWrap = document.getElementById('photoPreviewWrap');
+  const previewImg = document.getElementById('photoPreview');
+  const ocrStatus = document.getElementById('ocrStatus');
+  const textarea = document.getElementById('matchmakerInput');
+
+  const url = URL.createObjectURL(file);
+  previewImg.src = url;
+  previewWrap.style.display = 'block';
+
+  // Show OCR status
+  ocrStatus.style.display = 'block';
+  ocrStatus.innerHTML = '🔍 Leyendo la foto… esto puede tardar unos segundos.';
+
+  try {
+    // Run Tesseract OCR
+    const worker = await Tesseract.createWorker('eng', 1, {
+      logger: m => {
+        if (m.status === 'recognizing text') {
+          const pct = Math.round(m.progress * 100);
+          ocrStatus.innerHTML = `🔍 Analizando texto… ${pct}%`;
+        }
+      }
+    });
+
+    // Set page segmentation to single block (good for lists)
+    await worker.setParameters({ tessedit_pageseg_mode: '6' });
+
+    const { data: { text } } = await worker.recognize(file);
+    await worker.terminate();
+
+    // Post-process OCR text: fix common misreads of sticker codes
+    const fixed = fixOCRText(text);
+
+    if (fixed.trim().length === 0) {
+      ocrStatus.innerHTML = '⚠️ No se pudo leer texto. Intentá con mejor iluminación o escribí a mano.';
+      ocrStatus.style.background = 'rgba(220,38,38,.12)';
+      ocrStatus.style.borderColor = 'rgba(220,38,38,.3)';
+      ocrStatus.style.color = '#f87171';
+      return;
+    }
+
+    // Put OCR result into textarea (user can edit before calculating)
+    textarea.value = fixed;
+
+    // Count how many valid stickers were detected
+    const parsed = parseRepeatedList(fixed);
+    ocrStatus.innerHTML = parsed.length > 0
+      ? `✅ ¡Listo! Se detectaron <strong>${parsed.length} figurita${parsed.length !== 1 ? 's' : ''}</strong>. Revisá y editá si hace falta, después tocá Calcular Match.`
+      : `⚠️ Texto leído pero no se detectaron figuritas válidas. Corregí el texto abajo.`;
+    ocrStatus.style.background = parsed.length > 0 ? 'rgba(16,185,129,.12)' : 'rgba(220,38,38,.12)';
+    ocrStatus.style.borderColor = parsed.length > 0 ? 'rgba(16,185,129,.3)' : 'rgba(220,38,38,.3)';
+    ocrStatus.style.color = parsed.length > 0 ? '#10b981' : '#f87171';
+
+    // Vibrate on success
+    if (navigator.vibrate && parsed.length > 0) navigator.vibrate([50, 30, 50]);
+
+    URL.revokeObjectURL(url);
+
+  } catch (err) {
+    ocrStatus.innerHTML = '❌ Error al procesar la foto. Intentá de nuevo o escribí la lista a mano.';
+    ocrStatus.style.background = 'rgba(220,38,38,.12)';
+    ocrStatus.style.borderColor = 'rgba(220,38,38,.3)';
+    ocrStatus.style.color = '#f87171';
+    console.error('OCR error:', err);
+  }
+}
+
+function fixOCRText(raw) {
+  // Build a set of valid team codes for matching
+  const validCodes = new Set(TEAMS.map(t => t.code));
+
+  // Common OCR substitutions on capital letters
+  const charFixes = {
+    '0': 'O', // sometimes O reads as 0 in codes — we'll handle both directions
+    'l': '1', 'I': '1', '|': '1',  // number misreads
+    'S': '5', 'G': '6', 'B': '8',  // only in number position
+  };
+
+  let lines = raw.split(/\n/);
+  let result = [];
+
+  lines.forEach(line => {
+    // Normalise line: uppercase, collapse spaces
+    let l = line.toUpperCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
+    if (!l) return;
+
+    // Extract all CODE NUM pairs with fuzzy code matching
+    // Try to fix codes: if a 2-4 char uppercase block is close to a valid code, accept it
+    const regex = /([A-Z0-9]{2,4})\s*(\d{1,2})/g;
+    let m;
+    let lineTokens = [];
+    while ((m = regex.exec(l)) !== null) {
+      let code = m[1];
+      const num = m[2];
+
+      // Direct match
+      if (validCodes.has(code)) {
+        lineTokens.push(`${code} ${num}`);
+        continue;
+      }
+
+      // Try fixing common OCR code confusions (0→O, O→0 swap)
+      const candidates = [
+        code,
+        code.replace(/0/g, 'O'),
+        code.replace(/O/g, '0'), // less likely but some fonts
+        code.replace(/1/g, 'I'),
+        code.replace(/I/g, '1'), // e.g. "B1H" → "BIH"
+        code.replace(/5/g, 'S'), // e.g. "5UI" → "SUI"
+        code.replace(/S/g, '5'),
+      ];
+
+      const fixed = candidates.find(c => validCodes.has(c));
+      if (fixed) {
+        lineTokens.push(`${fixed} ${num}`);
+      }
+      // If no match, skip silently (let user fix in textarea)
+    }
+
+    if (lineTokens.length > 0) result.push(lineTokens.join(', '));
+  });
+
+  return result.join('\n') || raw; // if nothing parsed, return raw so user sees what OCR got
+}
+
+// ── MATCHMAKER DE REPES ──
+function parseRepeatedList(text) {
+  // Parses formats like: "MEX 4, MEX 12, RSA 5" or "MEX4 RSA5" or "MEX 04 - RSA 5"
+  const result = []; // [{code, num}]
+  // Normalise separators and extract tokens "CODE NUM"
+  const cleaned = text.toUpperCase().replace(/[,;\-\/\n\r]+/g, ' ').trim();
+  // Match patterns: CODE NUM or CODENUM
+  const regex = /([A-Z]{2,4})\s*(\d{1,2})/g;
+  let m;
+  while ((m = regex.exec(cleaned)) !== null) {
+    const code = m[1];
+    const num = parseInt(m[2], 10);
+    if (TEAMS.find(t => t.code === code)) {
+      result.push({ code, num });
+    }
+  }
+  return result;
+}
+
+function getMyRepeated() {
+  // Returns [{code, num, count}] where count = extra copies (v===2 → 1 extra, v===3 → 2 extras)
+  const result = [];
+  TEAMS.forEach(t => {
+    getStickers(t).forEach(n => {
+      const v = state[t.code] && state[t.code][n];
+      if (v === 2) result.push({ code: t.code, num: n, count: 1 });
+      if (v === 3) result.push({ code: t.code, num: n, count: 2 });
+    });
+  });
+  return result;
+}
+
+function getMyMissing() {
+  // Returns Set of "CODE-NUM" strings
+  const set = new Set();
+  TEAMS.forEach(t => {
+    getStickers(t).forEach(n => {
+      const v = state[t.code] && state[t.code][n];
+      if (!v) set.add(`${t.code}-${n}`);
+    });
+  });
+  return set;
+}
+
+function calcularMatch() {
+  const input = document.getElementById('matchmakerInput').value.trim();
+  const container = document.getElementById('matchResult');
+
+  if (!input) {
+    container.innerHTML = `<div style="text-align:center;padding:20px;color:var(--text2);font-size:14px;">✏️ Ingresá las repetidas de tu amigo primero.</div>`;
+    return;
+  }
+
+  // Parse friend's repeated list
+  const friendRepeated = parseRepeatedList(input);
+
+  if (friendRepeated.length === 0) {
+    container.innerHTML = `<div style="background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.3);border-radius:12px;padding:14px;font-size:13px;color:#f87171;text-align:center;">
+      ❌ No se pudieron leer figuritas válidas. Asegurate de usar el formato: <strong>MEX 4, ARG 11, BRA 3</strong>
+    </div>`;
+    return;
+  }
+
+  const myMissing = getMyMissing();
+  const myRepeated = getMyRepeated();
+
+  // Build friend's missing set: we need to know what the friend needs.
+  // Since we don't have the friend's full album, we infer their missing
+  // as: everything WE have (owned, not repeated) that we can give.
+  // What we actually compute:
+  //   iGetFromFriend: friend's repeated ∩ my missing
+  //   iGiveToFriend: my repeated that appear in friend's "needs" (we can't know)
+  //   → We give the user what we CAN compute precisely:
+  //     - TE LLEVÁS: which of the friend's repeated I actually need
+  //     - ENTREGÁS: show my repeated (friend may want them) - display them for selection
+
+  // TE LLEVÁS: friend's repeated stickers that I'm missing
+  const iGet = friendRepeated.filter(({ code, num }) => myMissing.has(`${code}-${num}`));
+
+  // Remove duplicates (if friend listed same sticker twice, count it once unless they have multiples)
+  // Build a map code-num → max count from friend list
+  const friendMap = {};
+  friendRepeated.forEach(({ code, num }) => {
+    const key = `${code}-${num}`;
+    friendMap[key] = (friendMap[key] || 0) + 1;
+  });
+
+  // De-duplicate iGet keeping count
+  const iGetUniq = [];
+  const iGetMap = {};
+  iGet.forEach(({ code, num }) => {
+    const key = `${code}-${num}`;
+    if (!iGetMap[key]) { iGetMap[key] = true; iGetUniq.push({ code, num }); }
+  });
+
+  // ENTREGÁS: my repeated stickers (to show the friend what I have available)
+  // We list them all so the friend can choose
+  const iGive = myRepeated;
+
+  // Calculate balanced trade: take min(iGetUniq.length, iGive.length) for the "deal"
+  const matchCount = iGetUniq.length;
+  const canGive = iGive.length;
+  const tradeCount = Math.min(matchCount, canGive);
+
+  // For display: suggested give list (first tradeCount of myRepeated)
+  const iGiveSuggested = iGive.slice(0, tradeCount);
+
+  const numLabel2 = n => n === 0 ? '00' : String(n).padStart(2, '0');
+
+  function stickerTag(code, num, color='var(--accent)') {
+    const team = TEAMS.find(t => t.code === code);
+    const emoji = team ? (team.emoji || EMOJI_MAP[code] || '') : '';
+    return `<span style="display:inline-flex;align-items:center;gap:3px;background:rgba(255,255,255,.08);border:1px solid ${color};border-radius:8px;padding:4px 8px;font-size:12px;font-weight:700;color:${color};white-space:nowrap;">${emoji} ${code} ${numLabel2(num)}</span>`;
+  }
+
+  if (matchCount === 0) {
+    container.innerHTML = `
+      <div style="background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.25);border-radius:14px;padding:18px;text-align:center;">
+        <div style="font-size:36px;margin-bottom:8px;">😔</div>
+        <div style="font-size:15px;font-weight:800;color:#f87171;margin-bottom:6px;">Sin match</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6;">Ninguna de las repetidas de tu amigo te sirve. Probá con alguien más o pedile las de otro equipo.</div>
+      </div>
+      ${iGive.length > 0 ? `<div style="margin-top:12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px;">
+        <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px;">💡 Tus repetidas disponibles (para ofrecer):</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;">${iGive.map(({code,num})=>stickerTag(code,num,'var(--gold)')).join('')}</div>
+      </div>` : ''}`;
+    return;
+  }
+
+  // Balance message
+  let balanceMsg, balanceColor;
+  if (tradeCount === matchCount && matchCount === canGive) {
+    balanceMsg = `✅ Intercambio limpio de ${tradeCount} × ${tradeCount}`;
+    balanceColor = '#10b981';
+  } else if (matchCount > canGive) {
+    const diff = matchCount - canGive;
+    balanceMsg = `⚖️ Él te da ${matchCount}, vos le das ${canGive}. Te debe ${diff} para la próxima.`;
+    balanceColor = 'var(--gold)';
+  } else {
+    const diff = canGive - matchCount;
+    balanceMsg = `⚖️ Él te da ${matchCount}, vos podés darle ${canGive}. Le quedarías debiendo ${diff} para la próxima.`;
+    balanceColor = 'var(--gold)';
+  }
+
+  const getListHTML = iGetUniq.map(({code,num})=>stickerTag(code,num,'#10b981')).join('');
+  const giveListHTML = iGiveSuggested.map(({code,num})=>stickerTag(code,num,'var(--gold)')).join('');
+  const extraRepHTML = iGive.length > tradeCount
+    ? `<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
+        <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:6px;">➕ Tus otras repes disponibles:</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;">${iGive.slice(tradeCount).map(({code,num})=>stickerTag(code,num,'var(--border)')).join('')}</div>
+      </div>` : '';
+
+  container.innerHTML = `
+    <div style="background:rgba(16,185,129,.08);border:2px solid rgba(16,185,129,.4);border-radius:16px;overflow:hidden;animation:slideUp .25s ease;">
+      <!-- Header -->
+      <div style="background:rgba(16,185,129,.15);padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(16,185,129,.25);">
+        <div style="font-size:28px;">🤝</div>
+        <div>
+          <div style="font-size:15px;font-weight:900;color:#10b981;">¡Hay Match!</div>
+          <div style="font-size:12px;color:var(--text2);">${matchCount} figurita${matchCount!==1?'s':''} posible${matchCount!==1?'s':''}</div>
+        </div>
+      </div>
+      <!-- Trade columns -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid rgba(255,255,255,.1);">
+        <!-- Left: te llevás -->
+        <div style="padding:14px 12px;border-right:1px solid rgba(255,255,255,.1);">
+          <div style="font-size:11px;font-weight:800;color:#10b981;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">🫱 TE LLEVÁS</div>
+          <div style="font-size:10px;color:var(--text2);margin-bottom:8px;">Él te da:</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">${iGetUniq.map(({code,num})=>`<div style="background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.35);border-radius:8px;padding:5px 8px;font-size:12px;font-weight:700;color:#10b981;">${(()=>{const t=TEAMS.find(x=>x.code===code);return t?(t.emoji||EMOJI_MAP[code]||''):''})()}&nbsp;${code} ${numLabel2(num)}</div>`).join('')}</div>
+        </div>
+        <!-- Right: entregás -->
+        <div style="padding:14px 12px;">
+          <div style="font-size:11px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">🫲 ENTREGÁS</div>
+          <div style="font-size:10px;color:var(--text2);margin-bottom:8px;">Vos le das:</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">${iGiveSuggested.length > 0 ? iGiveSuggested.map(({code,num})=>`<div style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.35);border-radius:8px;padding:5px 8px;font-size:12px;font-weight:700;color:var(--gold);">${(()=>{const t=TEAMS.find(x=>x.code===code);return t?(t.emoji||EMOJI_MAP[code]||''):''})()}&nbsp;${code} ${numLabel2(num)}</div>`).join('') : '<div style="font-size:11px;color:var(--text2);font-style:italic;">Sin repetidas para dar</div>'}</div>
+        </div>
+      </div>
+      <!-- Balance -->
+      <div style="padding:12px 16px;text-align:center;">
+        <div style="font-size:13px;font-weight:800;color:${balanceColor};">${balanceMsg}</div>
+      </div>
+      ${extraRepHTML ? `<div style="padding:0 14px 14px;">${extraRepHTML}</div>` : ''}
+    </div>
+    <!-- Share button -->
+    <button onclick="compartirMatchWA()" style="width:100%;background:#25D366;border:none;border-radius:12px;color:#fff;font-size:14px;font-weight:800;padding:13px;cursor:pointer;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;">
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;flex-shrink:0;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Compartir acuerdo por WhatsApp
+    </button>`;
+}
+
+function compartirMatchWA() {
+  // Re-run the calculation to get the data for sharing
+  const input = document.getElementById('matchmakerInput').value.trim();
+  if (!input) return;
+  const friendRepeated = parseRepeatedList(input);
+  const myMissing = getMyMissing();
+  const myRepeated = getMyRepeated();
+
+  const friendMap = {};
+  friendRepeated.forEach(({ code, num }) => { const key = `${code}-${num}`; friendMap[key] = (friendMap[key]||0)+1; });
+
+  const iGetUniq = [];
+  const iGetSeen = {};
+  friendRepeated.filter(({code,num}) => myMissing.has(`${code}-${num}`)).forEach(({code,num}) => {
+    const key = `${code}-${num}`;
+    if (!iGetSeen[key]) { iGetSeen[key] = true; iGetUniq.push({code,num}); }
+  });
+
+  const canGive = myRepeated.length;
+  const tradeCount = Math.min(iGetUniq.length, canGive);
+  const iGiveSuggested = myRepeated.slice(0, tradeCount);
+
+  const numLbl = n => n === 0 ? '00' : String(n).padStart(2, '0');
+
+  let msg = `🤝 *ACUERDO DE INTERCAMBIO – MUNDIAL 2026*\n${'▬'.repeat(24)}\n`;
+  msg += `\n🫱 *ME LLEVÁS* (te doy estas):`;
+  if (iGetUniq.length > 0) {
+    iGetUniq.forEach(({code,num}) => { const t=TEAMS.find(x=>x.code===code); const e=t?(t.emoji||EMOJI_MAP[code]||''):''; msg+=`\n  ${e} ${code} ${numLbl(num)}`; });
+  } else { msg += '\n  (ninguna)'; }
+
+  msg += `\n\n🫲 *TE DOY* (me das estas):`;
+  if (iGiveSuggested.length > 0) {
+    iGiveSuggested.forEach(({code,num}) => { const t=TEAMS.find(x=>x.code===code); const e=t?(t.emoji||EMOJI_MAP[code]||''):''; msg+=`\n  ${e} ${code} ${numLbl(num)}`; });
+  } else { msg += '\n  (ninguna)'; }
+
+  const diff = iGetUniq.length - iGiveSuggested.length;
+  msg += `\n\n📊 *Balance:* `;
+  if (diff === 0) msg += `Intercambio limpio ${tradeCount}×${tradeCount} ✅`;
+  else if (diff > 0) msg += `Me das ${iGetUniq.length}, te doy ${iGiveSuggested.length}. Me debés ${diff} para la próxima.`;
+  else msg += `Me das ${iGetUniq.length}, te doy ${iGiveSuggested.length}. Te debo ${Math.abs(diff)} para la próxima.`;
+
+  msg += `\n\n▬▬ Enviado desde Album Mundial 2026 📱`;
+
+  const encoded = encodeURIComponent(msg);
+  window.open(`https://wa.me/?text=${encoded}`, '_blank');
+}
+
+
+loadState();
+buildTeamList();
+updateGlobal();
+saveProgressSnapshot();
+updateCloudBtn();
+startAutoCloudSync();
+
+// ── Test exchange bar renders correctly (remove after confirmed) ──
+setTimeout(() => {
+  const bar = document.getElementById('exchangeBar');
+  if (bar) { bar.classList.add('visible'); }
+  setTimeout(() => {
+    if (bar) { bar.classList.remove('visible'); }
+  }, 2000);
+}, 800);
+
+// Init prevCompleted with current state
+TEAMS.forEach(t => { prevCompleted[t.code] = ownedCount(t.code) === t.total; });
+
+// Confetti bienvenida — se lanza al desbloquear (ver unlock())
+
+// Auto-download desde la nube al entrar (si tiene PIN)
+(async function autoCloudLoadOnStart() {
+  const pin = getSyncPin();
+  if (!pin) return;
+  const badge = document.getElementById('saveBadge');
+  if (badge) { badge.classList.add('saving'); badge.textContent = '☁️ Sincronizando…'; }
+  try {
+    const res = await cloudDownloadByPin(pin);
+    if (res.ok) {
+      const importedState = res.data.state;
+      TEAMS.forEach(t => { if (importedState[t.code]) state[t.code] = importedState[t.code]; });
+      localStorage.setItem('mundial2026app', JSON.stringify(state));
+      buildTeamList();
+      updateGlobal();
+      if (badge) {
+        badge.textContent = '☁️ Actualizado ✓';
+        setTimeout(() => { badge.classList.remove('saving'); badge.textContent = 'Guardado ✓'; }, 2500);
+      }
+    } else {
+      if (badge) { badge.classList.remove('saving'); badge.textContent = 'Guardado ✓'; }
+    }
+  } catch(e) {
+    if (badge) { badge.classList.remove('saving'); badge.textContent = 'Guardado ✓'; }
+  }
+})();
+
+// ── PASSWORD LOCK ──
+(function() {
+  const CORRECT = 'tomy';
+  const SESSION_KEY = 'mundial2026_unlocked';
+
+  function unlock() {
+    document.getElementById('lockOverlay').style.display = 'none';
+    sessionStorage.setItem(SESSION_KEY, '1');
+    // Papelitos de bienvenida
+    setTimeout(() => launchConfetti(), 200);
+  }
+
+  function checkPassword() {
+    const input = document.getElementById('lockInput');
+    const error = document.getElementById('lockError');
+    if (input.value === CORRECT) {
+      // Animación de éxito
+      document.getElementById('lockBox').style.transform = 'scale(1.05)';
+      setTimeout(() => { unlock(); }, 300);
+    } else {
+      error.style.display = 'block';
+      input.value = '';
+      input.focus();
+      // Vibración de error
+      document.getElementById('lockBox').style.animation = 'lockShake .4s ease';
+      setTimeout(() => { document.getElementById('lockBox').style.animation = ''; }, 400);
+    }
+  }
+
+  // Si ya está desbloqueado en esta sesión, no mostrar
+  if (sessionStorage.getItem(SESSION_KEY) === '1') {
+    setTimeout(() => launchConfetti(), 400);
+    return;
+  }
+
+  // Crear overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'lockOverlay';
+  overlay.innerHTML = `
+    <div id="lockBox">
+      <div class="lock-icon">🔒</div>
+      <div class="lock-title">⚽ Mundial 2026</div>
+      <div class="lock-subtitle">Mi Álbum</div>
+      <input id="lockInput" type="password" placeholder="Ingresá la clave" autocomplete="off" />
+      <div id="lockError">❌ Clave incorrecta</div>
+      <button id="lockBtn" onclick="document.getElementById('lockBtn').dispatchEvent(new Event('_check'))">Entrar</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  // Styles
+  const style = document.createElement('style');
+  style.textContent = `
+    #lockOverlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #0f172a 0%, #064e3b 60%, #0f766e 100%);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    #lockBox {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 24px;
+      padding: 40px 32px 36px;
+      width: 100%;
+      max-width: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 25px 60px rgba(0,0,0,.6);
+      transition: transform .2s;
+    }
+    .lock-icon {
+      font-size: 52px;
+      margin-bottom: 4px;
+      filter: drop-shadow(0 0 12px rgba(245,158,11,.4));
+    }
+    .lock-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: #f59e0b;
+      letter-spacing: -.5px;
+    }
+    .lock-subtitle {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+    #lockInput {
+      width: 100%;
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: 12px;
+      color: #f1f5f9;
+      font-size: 16px;
+      padding: 14px 16px;
+      text-align: center;
+      outline: none;
+      letter-spacing: 2px;
+      transition: border-color .2s;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    #lockInput:focus { border-color: #22d3ee; }
+    #lockInput::placeholder { letter-spacing: 0; color: #475569; }
+    #lockError {
+      color: #ef4444;
+      font-size: 13px;
+      font-weight: 700;
+      display: none;
+      margin-top: -4px;
+    }
+    #lockBtn {
+      width: 100%;
+      background: linear-gradient(90deg, #16a34a, #0d9488);
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      padding: 14px;
+      cursor: pointer;
+      margin-top: 6px;
+      letter-spacing: .3px;
+      transition: opacity .2s, transform .1s;
+    }
+    #lockBtn:active { opacity: .85; transform: scale(.97); }
+    @keyframes lockShake {
+      0%,100% { transform: translateX(0); }
+      20% { transform: translateX(-10px); }
+      40% { transform: translateX(10px); }
+      60% { transform: translateX(-8px); }
+      80% { transform: translateX(8px); }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Eventos
+  document.getElementById('lockBtn').addEventListener('_check', checkPassword);
+  document.getElementById('lockBtn').addEventListener('click', checkPassword);
+  document.getElementById('lockInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkPassword();
+    document.getElementById('lockError').style.display = 'none';
+  });
+})();
+</script>
+</body>
+</html>
