@@ -2256,8 +2256,9 @@ function buildTeamList() {
       if (!hasMissing && !complete) return;
       // complete teams are shown with a label but no missing chips
     }
+    let hasRepeated = false;
     if (activeFilter === 'repeated') {
-      const hasRepeated = nums.some(n => state[team.code] && (state[team.code][n] === 2 || state[team.code][n] === 3));
+      hasRepeated = nums.some(n => state[team.code] && (state[team.code][n] === 2 || state[team.code][n] === 3));
       if (!hasRepeated && !complete) return;
       // complete teams shown with label
     }
@@ -2289,7 +2290,10 @@ function buildTeamList() {
 
     // Show "Completo" badge for complete teams in filtered views
     const showCompletoBadge = complete && (activeFilter === 'repeated' || activeFilter === 'missing');
-    const completoHTML = showCompletoBadge
+    const noRepeatedBadge = activeFilter === 'repeated' && complete && !hasRepeated;
+    const completoHTML = noRepeatedBadge
+      ? `<div style="width:100%;padding:6px 0;text-align:center;font-size:12px;font-weight:800;color:var(--text2);letter-spacing:.5px;">🔁 SIN REPETIDAS</div>`
+      : showCompletoBadge
       ? `<div style="width:100%;padding:6px 0;text-align:center;font-size:12px;font-weight:800;color:var(--green);letter-spacing:.5px;">✅ COMPLETO</div>`
       : '';
 
