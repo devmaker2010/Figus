@@ -3665,17 +3665,8 @@ function launchConfetti() {
 // ── TEAM COMPLETION TOAST ──
 let prevCompleted = {};
 function checkTeamCompletion(code) {
-  const team = TEAMS.find(t => t.code === code);
-  if (!team) return;
-  const owned = ownedCount(code);
-  const wasComplete = prevCompleted[code];
-  const isNowComplete = owned === team.total;
-  if (!wasComplete && isNowComplete) {
-    prevCompleted[code] = true;
-    showTeamToast(team);
-  } else if (!isNowComplete) {
-    prevCompleted[code] = false;
-  }
+  // Mensaje emergente de "¡Genio! ¡Completaste X!" desactivado a pedido.
+  return;
 }
 
 function showTeamToast(team) {
