@@ -880,6 +880,150 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 }
 .xbar-reset:active { background: rgba(255,255,255,.2); color: #fff; }
 
+/* ── CARRITO (boton header) ── */
+.cart-btn {
+  position: relative;
+  font-size: 15px;
+  background: rgba(245,158,11,.18);
+  border: 1px solid rgba(245,158,11,.4);
+  padding: 5px 9px;
+  border-radius: 20px;
+  color: #fbbf24;
+  cursor: pointer;
+  line-height: 1;
+}
+.cart-btn-badge {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  background: var(--red);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  border-radius: 999px;
+  min-width: 17px;
+  height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  border: 1.5px solid var(--bg);
+}
+.cart-btn-badge.hidden { display: none; }
+
+/* Chip marcado en el carrito */
+.sticker-chip.in-cart {
+  outline: 2.5px solid var(--accent);
+  outline-offset: 1px;
+  box-shadow: 0 0 8px rgba(34,211,238,.7);
+}
+.sticker-chip.in-cart::before {
+  content: '🛒';
+  position: absolute;
+  bottom: -5px;
+  left: -5px;
+  font-size: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* ── CARRITO MODAL ── */
+.cart-modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.75);
+  z-index: 1200; display: none; align-items: flex-end;
+  justify-content: center; padding-bottom: var(--safe-bot);
+}
+.cart-modal-overlay.open { display: flex; }
+.cart-modal-sheet {
+  background: var(--surface); border-radius: 20px 20px 0 0;
+  width: 100%; max-height: 88vh; display: flex;
+  flex-direction: column; overflow: hidden;
+  animation: slideUp .25s ease;
+}
+.cart-modal-top {
+  display: flex; align-items: center;
+  padding: 14px 16px; border-bottom: 1px solid var(--border);
+}
+.cart-modal-title { flex: 1; font-size: 16px; font-weight: 800; }
+.cart-modal-close { font-size: 22px; color: var(--text2); cursor: pointer; padding: 0 4px; }
+.cart-modal-body { padding: 14px; overflow-y: auto; flex: 1; }
+.cart-empty {
+  text-align: center;
+  padding: 50px 16px;
+  color: var(--text2);
+}
+.cart-empty .emoji { font-size: 48px; margin-bottom: 10px; }
+.cart-empty .txt { font-size: 14px; line-height: 1.6; }
+.cart-section-title {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--text2);
+  margin: 14px 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cart-section-title:first-child { margin-top: 0; }
+.cart-section-title .cnt {
+  background: var(--surface2);
+  border-radius: 20px;
+  padding: 1px 8px;
+  font-size: 11px;
+}
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 9px 10px;
+  margin-bottom: 6px;
+}
+.cart-item-flag { font-size: 20px; flex-shrink: 0; width: 26px; text-align: center; }
+.cart-item-info { flex: 1; min-width: 0; }
+.cart-item-team { font-size: 13px; font-weight: 700; }
+.cart-item-num { font-size: 11px; color: var(--text2); }
+.cart-item-remove {
+  background: rgba(220,38,38,.15);
+  border: 1px solid rgba(220,38,38,.3);
+  color: #f87171;
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.cart-modal-actions {
+  display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--border);
+  padding-bottom: calc(12px + var(--safe-bot));
+}
+.btn-cart-wa {
+  flex: 2; background: #25D366; border: none; color: #fff;
+  border-radius: 12px; padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer;
+}
+.btn-cart-clear {
+  flex: 1; background: transparent; border: 1px solid var(--red); color: var(--red);
+  border-radius: 12px; padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer;
+}
+.cart-hint {
+  background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.2);
+  border-radius: 10px; padding: 9px 12px; margin-bottom: 12px;
+  font-size: 11px; color: var(--text2); line-height: 1.5;
+}
+
 /* ── PRINT / PDF STYLES ── */
 @media print {
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
@@ -911,6 +1055,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
           <span id="sobreNecesarios" style="font-size:12px;font-weight:900;color:#f87171;">0</span>
           <span style="font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.3px;">faltan</span>
         </div>
+        <button class="cart-btn" onclick="openCartModal()" id="cartBtn">🤝<span class="cart-btn-badge hidden" id="cartBadge">0</span></button>
         <button onclick="openSyncModal()" style="font-size:11px;background:rgba(34,211,238,.2);border:1px solid rgba(34,211,238,.4);padding:4px 10px;border-radius:20px;color:#22d3ee;cursor:pointer;font-weight:700;" id="cloudBtn">☁️ Nube</button>
         <button onclick="openSaveLoadModal()" style="font-size:11px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:4px 10px;border-radius:20px;color:rgba(255,255,255,.85);cursor:pointer;font-weight:600;">💾 Datos</button>
         <div class="save-badge" id="saveBadge">Guardado ✓</div>
@@ -1286,6 +1431,23 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   </div>
 </div>
 
+<!-- CARRITO MODAL -->
+<div class="cart-modal-overlay" id="cartModal">
+  <div class="cart-modal-sheet">
+    <div class="cart-modal-top">
+      <div class="cart-modal-title">🤝 Carrito de intercambio</div>
+      <span class="cart-modal-close" onclick="closeCartModal()">✕</span>
+    </div>
+    <div class="cart-modal-body" id="cartModalBody">
+      <!-- contenido dinámico -->
+    </div>
+    <div class="cart-modal-actions" id="cartModalActions" style="display:none;">
+      <button class="btn-cart-clear" onclick="confirmClearCart()">🗑️ Reiniciar</button>
+      <button class="btn-cart-wa" onclick="shareCartWhatsApp()">📲 WhatsApp</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const CDN_FLAG = iso => `https://flagcdn.com/w40/${iso.toLowerCase()}.png`;
 
@@ -1413,6 +1575,174 @@ function setExchangeMode(active) {
   xbarActive = active;
   console.log('[XBar] setExchangeMode:', active, '| give:', xbarGive, '| receive:', xbarReceive);
   updateExchangeBar();
+}
+
+// ── CARRITO DE INTERCAMBIO ──
+// cart: { "ARG-5": { code:'ARG', num:5, type:'doy'|'falta' }, ... }
+const CART_KEY = 'mundial2026_cart';
+let cart = {};
+let longPressTimer = null;
+let longPressFired = false;
+
+function loadCart() {
+  try { cart = JSON.parse(localStorage.getItem(CART_KEY) || '{}'); } catch(e) { cart = {}; }
+}
+function saveCart() {
+  try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch(e) {}
+}
+function cartKey(code, num) { return `${code}-${num}`; }
+function isInCart(code, num) { return !!cart[cartKey(code, num)]; }
+function cartCount() { return Object.keys(cart).length; }
+
+// Decide automáticamente el tipo: si la figurita está repetida → "doy"; si falta → "falta"
+function inferCartType(code, num) {
+  const val = state[code] && state[code][num];
+  if (val === 2 || val === 3) return 'doy';
+  return 'falta'; // missing o owned simple → se pide como falta por defecto
+}
+
+function toggleCartItem(code, num) {
+  const key = cartKey(code, num);
+  if (cart[key]) {
+    delete cart[key];
+  } else {
+    cart[key] = { code, num, type: inferCartType(code, num) };
+  }
+  saveCart();
+  updateCartBadge();
+  // refresh visual del chip si está en pantalla
+  const chip = document.getElementById(`chip-${code}-${num}`);
+  if (chip) chip.classList.toggle('in-cart', !!cart[key]);
+  if (navigator.vibrate) navigator.vibrate(cart[key] ? [20, 40, 20] : 15);
+}
+
+function removeFromCart(code, num) {
+  delete cart[cartKey(code, num)];
+  saveCart();
+  updateCartBadge();
+  const chip = document.getElementById(`chip-${code}-${num}`);
+  if (chip) chip.classList.remove('in-cart');
+  renderCartModal();
+}
+
+function toggleCartItemType(code, num) {
+  const key = cartKey(code, num);
+  const item = cart[key];
+  if (!item) return;
+  item.type = item.type === 'doy' ? 'falta' : 'doy';
+  saveCart();
+  renderCartModal();
+}
+
+function updateCartBadge() {
+  const n = cartCount();
+  const badge = document.getElementById('cartBadge');
+  if (!badge) return;
+  badge.textContent = n;
+  badge.classList.toggle('hidden', n === 0);
+}
+
+function openCartModal() {
+  renderCartModal();
+  document.getElementById('cartModal').classList.add('open');
+}
+function closeCartModal() {
+  document.getElementById('cartModal').classList.remove('open');
+}
+
+function renderCartModal() {
+  const body = document.getElementById('cartModalBody');
+  const actions = document.getElementById('cartModalActions');
+  const items = Object.values(cart);
+
+  if (items.length === 0) {
+    body.innerHTML = `
+      <div class="cart-empty">
+        <div class="emoji">🛒</div>
+        <div class="txt">El carrito está vacío.<br>Mantené presionada una figurita en el Álbum para agregarla acá.</div>
+      </div>`;
+    actions.style.display = 'none';
+    return;
+  }
+  actions.style.display = 'flex';
+
+  const doy = items.filter(i => i.type === 'doy').sort((a,b)=> a.code.localeCompare(b.code) || a.num-b.num);
+  const falta = items.filter(i => i.type === 'falta').sort((a,b)=> a.code.localeCompare(b.code) || a.num-b.num);
+
+  const renderItem = (it) => {
+    const t = TEAMS.find(x => x.code === it.code);
+    const flag = t ? `<span style="font-size:20px;">${getEmoji(t)}</span>` : '';
+    const teamName = t ? t.name : it.code;
+    return `<div class="cart-item">
+      <div class="cart-item-flag">${flag}</div>
+      <div class="cart-item-info" onclick="toggleCartItemType('${it.code}', ${it.num})" style="cursor:pointer;">
+        <div class="cart-item-team">${teamName}</div>
+        <div class="cart-item-num">${it.code} ${numLabel(it.num)} · <span style="color:var(--accent);">tocar para cambiar</span></div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart('${it.code}', ${it.num})">✕</button>
+    </div>`;
+  };
+
+  let html = `<div class="cart-hint">💡 Mantené presionada una figurita en el Álbum para agregarla o quitarla del carrito. Usá esta lista cuando vayas a entregar o recibir con tu amigo/a.</div>`;
+
+  html += `<div class="cart-section-title">🫱 Doy (tengo repetida) <span class="cnt">${doy.length}</span></div>`;
+  html += doy.length ? doy.map(renderItem).join('') : `<div style="font-size:12px;color:var(--text2);padding:0 4px 8px;">Ninguna marcada todavía</div>`;
+
+  html += `<div class="cart-section-title">🫲 Recibo (me falta) <span class="cnt">${falta.length}</span></div>`;
+  html += falta.length ? falta.map(renderItem).join('') : `<div style="font-size:12px;color:var(--text2);padding:0 4px 8px;">Ninguna marcada todavía</div>`;
+
+  body.innerHTML = html;
+}
+
+function confirmClearCart() {
+  if (cartCount() === 0) return;
+  if (confirm('¿Vaciar el carrito? Se van a quitar todas las figuritas marcadas (esto no afecta tu álbum).')) {
+    clearCart();
+  }
+}
+function clearCart() {
+  cart = {};
+  saveCart();
+  updateCartBadge();
+  renderCartModal();
+  // limpiar marcas visuales en chips abiertos
+  document.querySelectorAll('.sticker-chip.in-cart').forEach(el => el.classList.remove('in-cart'));
+}
+
+function shareCartWhatsApp() {
+  const items = Object.values(cart);
+  if (items.length === 0) return;
+  const doy = items.filter(i => i.type === 'doy').sort((a,b)=> a.code.localeCompare(b.code) || a.num-b.num);
+  const falta = items.filter(i => i.type === 'falta').sort((a,b)=> a.code.localeCompare(b.code) || a.num-b.num);
+
+  const lineFor = (it) => {
+    const t = TEAMS.find(x => x.code === it.code);
+    const e = t ? (t.emoji || EMOJI_MAP[it.code] || '') : '';
+    return `  ${e} ${it.code} ${numLabel(it.num)}`;
+  };
+
+  let msg = `🛒 *CARRITO DE INTERCAMBIO – MUNDIAL 2026*\n${'▬'.repeat(24)}\n`;
+  msg += `\n🫱 *TE DOY:*`;
+  msg += doy.length ? '\n' + doy.map(lineFor).join('\n') : '\n  (ninguna)';
+  msg += `\n\n🫲 *ME DAS:*`;
+  msg += falta.length ? '\n' + falta.map(lineFor).join('\n') : '\n  (ninguna)';
+  msg += `\n\n▬▬ Enviado desde Album Mundial 2026 📱`;
+
+  const encoded = encodeURIComponent(msg);
+  window.open(`https://wa.me/?text=${encoded}`, '_blank');
+}
+
+// ── Long press para marcar/desmarcar el carrito desde un chip ──
+function startLongPress(e, code, num) {
+  longPressFired = false;
+  clearTimeout(longPressTimer);
+  longPressTimer = setTimeout(() => {
+    longPressFired = true;
+    toggleCartItem(code, num);
+  }, 550);
+}
+function cancelLongPress() {
+  clearTimeout(longPressTimer);
 }
 
 // ── CHANGE LOG ──
@@ -1783,11 +2113,15 @@ function buildSummaryRows(filterType) {
     const isOwned = val === true;
     const isRep2  = val === 2;
     const isRep3  = val === 3;
-    const cls = isOwned ? ' owned' : isRep2 ? ' repeated' : isRep3 ? ' repeated3' : '';
+    const cartCls = isInCart(code, n) ? ' in-cart' : '';
+    const cls = (isOwned ? ' owned' : isRep2 ? ' repeated' : isRep3 ? ' repeated3' : '') + cartCls;
     const repLabel = isRep2 ? 'x2' : isRep3 ? 'x3' : '';
     return `<div class="sticker-chip${cls}" id="chip-${code}-${n}" data-rep-label="${repLabel}"
-      style="width:64px;height:54px;flex-direction:column;gap:1px;font-size:10px;"
+      style="width:64px;height:54px;flex-direction:column;gap:1px;font-size:10px;position:relative;"
       ontouchstart="handleTouch(event,'${code}',${n})"
+      ontouchend="handleTouchEnd(event,'${code}',${n})"
+      onmousedown="handleMouseDown(event,'${code}',${n})"
+      onmouseup="handleMouseUp(event,'${code}',${n})"
       onclick="handleClick(event,'${code}',${n})">
       <span style="font-size:9px;font-weight:900;opacity:.8;letter-spacing:.3px;">${code}</span>
       <span style="font-size:13px;font-weight:800;">${numLabel(n)}</span>
@@ -1941,10 +2275,14 @@ function buildTeamList() {
         if (!isMissing) return '';
       }
       const isHighlighted = stickerNum !== null && num === stickerNum;
-      const cls = (isOwned ? ' owned' : isRepeated ? ' repeated' : isRepeated3 ? ' repeated3' : '') + (isHighlighted ? ' sticker-highlight' : '');
+      const cartCls = isInCart(team.code, num) ? ' in-cart' : '';
+      const cls = (isOwned ? ' owned' : isRepeated ? ' repeated' : isRepeated3 ? ' repeated3' : '') + (isHighlighted ? ' sticker-highlight' : '') + cartCls;
       const repLabel = isRepeated ? 'x2' : isRepeated3 ? 'x3' : '';
-      return `<div class="sticker-chip${cls}" id="chip-${team.code}-${num}" data-rep-label="${repLabel}"
+      return `<div class="sticker-chip${cls}" id="chip-${team.code}-${num}" data-rep-label="${repLabel}" style="position:relative;"
         ontouchstart="handleTouch(event,'${team.code}',${num})"
+        ontouchend="handleTouchEnd(event,'${team.code}',${num})"
+        onmousedown="handleMouseDown(event,'${team.code}',${num})"
+        onmouseup="handleMouseUp(event,'${team.code}',${num})"
         onclick="handleClick(event,'${team.code}',${num})">${numLabel(num)}</div>`;
     }).join('');
 
@@ -1984,14 +2322,25 @@ function buildTeamList() {
 let touchMoved = false;
 function handleTouch(e, code, num) {
   touchMoved = false;
-  e.currentTarget.addEventListener('touchmove', () => { touchMoved = true; }, { once: true });
+  e.currentTarget.addEventListener('touchmove', () => { touchMoved = true; cancelLongPress(); }, { once: true });
+  startLongPress(e, code, num);
+}
+function handleTouchEnd(e, code, num) {
+  cancelLongPress();
 }
 function handleClick(e, code, num) {
   if (touchMoved) return;
+  if (longPressFired) { longPressFired = false; return; } // ya se manejó como long-press
   e.stopPropagation();
   toggleSticker(code, num);
   // haptic if available
   if (navigator.vibrate) navigator.vibrate(30);
+}
+function handleMouseDown(e, code, num) {
+  startLongPress(e, code, num);
+}
+function handleMouseUp(e, code, num) {
+  cancelLongPress();
 }
 
 function toggleCard(code) {
@@ -3748,8 +4097,10 @@ function compartirMatchWA() {
 
 
 loadState();
+loadCart();
 buildTeamList();
 updateGlobal();
+updateCartBadge();
 saveProgressSnapshot();
 updateCloudBtn();
 startAutoCloudSync();
