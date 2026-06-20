@@ -53,7 +53,8 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   opacity: .07;
   transform: rotate(20deg);
 }
-.header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 6px; }
+.header-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-end; flex: 1; min-width: 0; }
 .header-title { font-size: 20px; font-weight: 800; letter-spacing: -.5px; }
 .header-title span { color: var(--gold); }
 .save-badge {
@@ -1044,7 +1045,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   <div class="header">
     <div class="header-top">
       <div class="header-title">⚽ <span>Mundial</span> 2026</div>
-      <div style="display:flex;gap:6px;align-items:center;">
+      <div class="header-actions">
         <!-- Sobres mini en header -->
         <div style="display:flex;gap:4px;align-items:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:3px 8px;">
           <span style="font-size:13px;">🎴</span>
@@ -1056,8 +1057,8 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
           <span style="font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.3px;">faltan</span>
         </div>
         <button class="cart-btn" onclick="openCartModal()" id="cartBtn">🤝<span class="cart-btn-badge hidden" id="cartBadge">0</span></button>
-        <button onclick="openSyncModal()" style="font-size:11px;background:rgba(34,211,238,.2);border:1px solid rgba(34,211,238,.4);padding:4px 10px;border-radius:20px;color:#22d3ee;cursor:pointer;font-weight:700;" id="cloudBtn">☁️ Nube</button>
-        <button onclick="openSaveLoadModal()" style="font-size:11px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:4px 10px;border-radius:20px;color:rgba(255,255,255,.85);cursor:pointer;font-weight:600;">💾 Datos</button>
+        <button onclick="openSyncModal()" style="font-size:11px;background:rgba(34,211,238,.2);border:1px solid rgba(34,211,238,.4);padding:4px 10px;border-radius:20px;color:#22d3ee;cursor:pointer;font-weight:700;white-space:nowrap;max-width:120px;overflow:hidden;text-overflow:ellipsis;" id="cloudBtn">☁️ Nube</button>
+        <button onclick="openSaveLoadModal()" style="font-size:11px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:4px 10px;border-radius:20px;color:rgba(255,255,255,.85);cursor:pointer;font-weight:600;white-space:nowrap;">💾 Datos</button>
         <div class="save-badge" id="saveBadge">Guardado ✓</div>
       </div>
     </div>
