@@ -2379,17 +2379,18 @@ function setSort(s, el) {
 
 // ── GLOBAL STATS ──
 function updateGlobal() {
-  let total = 0, owned = 0, repeated = 0;
-  TEAMS.forEach(t => { total += t.total; owned += ownedCount(t.code); repeated += repeatedCount(t.code); });
+  let total = 0, owned = 0, repeatedDistinct = 0;
+  TEAMS.forEach(t => { total += t.total; owned += ownedCount(t.code); repeatedDistinct += repeatedCount(t.code); });
+  const repeatedCopies = totalRepeated(); // total de copias "de más" reales
   const pct = total ? Math.round((owned / total) * 100) : 0;
   document.getElementById('globalFill').style.width = pct + '%';
   document.getElementById('statPct').textContent = pct + '%';
   document.getElementById('statHave').textContent = owned;
   document.getElementById('statMiss').textContent = total - owned;
-  document.getElementById('statRep').textContent = repeated;
-  // KPIs sobres (7 figuritas por sobre)
+  document.getElementById('statRep').textContent = repeatedCopies;
+  // KPIs sobres (7 figuritas por sobre) — usa figuritas DISTINTAS repetidas (casillas cubiertas de más)
   const sobreAbiertos = Math.floor(owned / 7);
-  const sobreNecesarios = Math.ceil((total - owned - repeated) / 7);
+  const sobreNecesarios = Math.ceil((total - owned - repeatedDistinct) / 7);
   const el1 = document.getElementById('sobreAbiertos');
   const el2 = document.getElementById('sobreNecesarios');
   if (el1) el1.textContent = sobreAbiertos;
