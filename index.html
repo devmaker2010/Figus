@@ -1995,8 +1995,14 @@ function numLabel(n) { return n === 0 ? '00' : n; }
 function ownedCount(code) { return Object.values(state[code] || {}).filter(v => v === true || v === 2 || v === 3).length; }
 function repeatedCount(code) { return Object.values(state[code] || {}).filter(v => v === 2 || v === 3).length; }
 function totalRepeated() {
+  // Cuenta las copias "de más" reales (x2 = 1 copia de más, x3 = 2 copias de más)
   let r = 0;
-  TEAMS.forEach(t => { r += repeatedCount(t.code); });
+  TEAMS.forEach(t => {
+    Object.values(state[t.code] || {}).forEach(v => {
+      if (v === 2) r += 1;
+      else if (v === 3) r += 2;
+    });
+  });
   return r;
 }
 function getEmoji(team) { return team.emoji || EMOJI_MAP[team.code] || '🏳️'; }
@@ -2756,11 +2762,11 @@ function buildWAMessage(type) {
   if (type === 'repetidas' || type === 'ambas') {
     if (type === 'ambas') msg += `\n${'▬'.repeat(28)}\n`;
     else msg += `🔁 *ÁLBUM MUNDIAL 2026 – MIS REPETIDAS*\n📅 ${date}  |  📊 ${pct}% completo (${owned}/${total})\n${'▬'.repeat(28)}\n`;
-    const { cats, jugLines, jugTotal, total: totalRep } = buildRepeatedSection();
-    if (totalRep === 0) {
+    const { cats, jugLines, jugTotal } = buildRepeatedSection();
+    if (rep === 0) {
       msg += '✅ No tenés figuritas repetidas.\n';
     } else {
-      msg += `🔁 *MIS REPETIDAS* (${totalRep} para intercambiar)\n`;
+      msg += `🔁 *MIS REPETIDAS* (${rep} para intercambiar)\n`;
       if (cats.especiales.length > 0) msg += `\n⭐ *Especiales:*\n${cats.especiales.join(' - ')}\n`;
       if (cats.escudos.length > 0)   msg += `\n🛡️ *Escudos (nro 1):*\n${cats.escudos.join(' - ')}\n`;
       if (cats.cocacola.length > 0)  msg += `\n🥤 *Coca Cola:*\n${cats.cocacola.join(' - ')}\n`;
